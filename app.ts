@@ -5,8 +5,8 @@ import logger from "morgan";
 import swaggerJsdoc from "express-jsdoc-swagger";
 import path from "path";
 
-import indexRouter from "./routes/index";
-import docsRouter from "./routes/docs";
+import indexRouter from "./src/routes/index";
+import docsRouter from "./src/routes/docs";
 
 const app: Express = express();
 

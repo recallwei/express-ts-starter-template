@@ -1,6 +1,6 @@
 {
   "version": "0.2",
   "language": "en",
-  "words": ["openapi"],
+  "words": ["openapi", "webapps", "AZUREAPPSERVICE_PUBLISHPROFILE"],
   "flagWords": []
 }
