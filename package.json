@@ -7,9 +7,11 @@
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
+    "cspell": "^6.4.1",
     "debug": "~2.6.9",
     "ejs": "~2.6.1",
     "express": "~4.16.1",
+    "express-jsdoc-swagger": "^1.7.0",
     "http-errors": "~1.6.3",
     "morgan": "~1.9.1"
   },
