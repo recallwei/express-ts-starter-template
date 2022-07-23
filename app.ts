@@ -1,10 +1,4 @@
-import express, {
-  Express,
-  ErrorRequestHandler,
-  Request,
-  Response,
-  NextFunction,
-} from "express";
+import express, { Express, Request, Response, NextFunction } from "express";
 import createError from "http-errors";
 import cookieParser from "cookie-parser";
 import logger from "morgan";
