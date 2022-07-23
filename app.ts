@@ -3,7 +3,7 @@ import createError from "http-errors";
 import cookieParser from "cookie-parser";
 import logger from "morgan";
 import swaggerJsdoc from "express-jsdoc-swagger";
-var path = require("path");
+import path from "path";
 
 var indexRouter = require("./routes/index");
 var docsRouter = require("./routes/docs");
