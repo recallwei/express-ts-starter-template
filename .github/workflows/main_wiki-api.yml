@@ -20,10 +20,12 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: "16.x"
-
+      - name: npm install yarn
+      - run: npm install -g yarn
       - name: yarn install, build, and test
         run: |
-          yarn && yarn build
+          yarn && yarn build --if-present
+          yarn test --if-present
           # yarn run build --if-present
           # yarn run test --if-present
 
