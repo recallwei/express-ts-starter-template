@@ -6,13 +6,16 @@
 
 import app from "./app";
 import http from "http";
+import dotenv from "dotenv";
 var debug = require("debug")("wiki-api:server");
 
 /**
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || "3001");
+dotenv.config();
+// const port = process.env.SERVER_PORT;
+const port: string | undefined = normalizePort(process.env.PORT || "3001");
 app.set("port", port);
 
 /**
@@ -25,7 +28,10 @@ var server = http.createServer(app);
  * Listen on provided port, on all network interfaces.
  */
 
-server.listen(port);
+server.listen(port, () => {
+  console.log(`⚡️[server]: Server is running at https://localhost:${port}`);
+});
+
 server.on("error", onError);
 server.on("listening", onListening);
 

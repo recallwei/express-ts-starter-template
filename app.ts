@@ -1,14 +1,20 @@
-import express from "express";
+import express, {
+  Express,
+  ErrorRequestHandler,
+  Request,
+  Response,
+  NextFunction,
+} from "express";
 import createError from "http-errors";
 import cookieParser from "cookie-parser";
 import logger from "morgan";
 import swaggerJsdoc from "express-jsdoc-swagger";
 import path from "path";
 
-var indexRouter = require("./routes/index");
-var docsRouter = require("./routes/docs");
+import indexRouter from "./routes/index";
+import docsRouter from "./routes/docs";
 
-var app = express();
+const app: Express = express();
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -47,12 +53,12 @@ app.use("/", indexRouter);
 app.use("/docs", docsRouter);
 
 // catch 404 and forward to error handler
-app.use(function (req: any, res: any, next: any) {
+app.use(function (req: Request, res: Response, next: NextFunction) {
   next(createError(404));
 });
 
 // error handler
-app.use(function (err: any, req: any, res: any, next: any) {
+app.use(function (err: any, req: Request, res: Response, next: NextFunction) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get("env") === "development" ? err : {};
