@@ -21,11 +21,11 @@ jobs:
         with:
           node-version: "16.x"
       - name: npm install yarn
-        run: npm install -g yarn
+        run: npm install --location=global yarn
       - name: yarn install, build, and test
         run: |
           yarn
-          yarn tsc && node ./build/index.js
+          yarn tsc
           # yarn test --if-present
           # yarn run build --if-present
           # yarn run test --if-present
