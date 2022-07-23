@@ -52,5 +52,5 @@ jobs:
         with:
           app-name: 'wiki-api'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_60EF4439402B417A945EA34D0464A38F }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_69675F82B4444213B254A12DEF47E2A8 }}
           package: .
