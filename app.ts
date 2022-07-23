@@ -2,6 +2,7 @@ import express from "express";
 import createError from "http-errors";
 import cookieParser from "cookie-parser";
 import logger from "morgan";
+import swaggerJsdoc from "express-jsdoc-swagger";
 var path = require("path");
 
 var indexRouter = require("./routes/index");
@@ -19,7 +20,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-const swaggerJsdoc = require("express-jsdoc-swagger");
 const options = {
   info: {
     title: "Bruce's Wiki API",
@@ -62,4 +62,4 @@ app.use(function (err: any, req: any, res: any, next: any) {
   res.render("error");
 });
 
-module.exports = app;
+export default app;
