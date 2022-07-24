@@ -3,8 +3,12 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "tsc && node ./build/index.js",
-    "tsc": "tsc"
+    "build": "rimraf build && tsc",
+    "prestart": "yarn build",
+    "start": "cross-env NODE_ENV=development node build/index.js",
+    "preserve": "yarn build",
+    "serve": "cross-env NODE_ENV=production concurrently \"tsc --watch\" \"nodemon -q build/index.js\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
     "@types/cookie-parser": "^1.4.3",
@@ -13,6 +17,7 @@
     "@types/morgan": "^1.9.3",
     "@types/node": "16",
     "cookie-parser": "~1.4.4",
+    "cross-env": "^7.0.3",
     "cspell": "^6.4.1",
     "debug": "~2.6.9",
     "dotenv": "^16.0.1",

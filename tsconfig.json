@@ -103,5 +103,5 @@
     "skipLibCheck": true /* Skip type checking all .d.ts files. */
   },
   "include": ["./**/*"],
-  "exclude": ["node_modules", ".github", "build"]
+  "exclude": ["node_modules"]
 }

@@ -22,13 +22,11 @@ jobs:
           node-version: "16.x"
       - name: npm install yarn
         run: npm install --location=global yarn
+
       - name: yarn install, build, and test
         run: |
-          yarn
-          yarn tsc
-          # yarn test --if-present
-          # yarn run build --if-present
-          # yarn run test --if-present
+          yarn && yarn build
+          yarn test --if-present
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
