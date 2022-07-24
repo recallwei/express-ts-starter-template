@@ -50,7 +50,7 @@ app.use("/", indexRouter);
 app.use("/docs", docsRouter);
 
 // catch 404 and forward to error handler
-app.use(function (req: Request, res: Response, next: NextFunction) {
+app.use(function (err: any, req: Request, res: Response, next: NextFunction) {
   next(createError(404));
 });
 
