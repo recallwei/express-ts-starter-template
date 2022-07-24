@@ -12,7 +12,6 @@
     "lint": "npx eslint . --ext .ts",
     "clear": "tsc --build --clean"
   },
-  "main": "/dist/index.js",
   "dependencies": {
     "@types/cookie-parser": "^1.4.3",
     "@types/debug": "^4.1.7",

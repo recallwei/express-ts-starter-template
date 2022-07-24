@@ -15,7 +15,7 @@ const debug: Debug.Debugger = Debug("wiki-api:server");
 
 dotenv.config();
 // const port = process.env.SERVER_PORT;
-const port: string | number | false = normalizePort(process.env.PORT || "3001");
+const port: string | number | false = normalizePort(process.env.PORT || "80");
 app.set("port", port);
 
 /**
