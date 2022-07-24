@@ -28,7 +28,7 @@ var server = http.createServer(app);
  */
 
 server.listen(port, () => {
-  console.log(`⚡️[server]: Server is running at https://localhost:${port}`);
+  console.log(`🚀[server]: Server is running at https://localhost:${port}`);
 });
 
 server.on("error", onError);

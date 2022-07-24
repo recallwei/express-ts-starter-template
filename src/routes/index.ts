@@ -9,7 +9,7 @@ const router: Router = express.Router();
  */
 router.get("/", function (req: Request, res: Response, next: NextFunction) {
   // res.send("Welcome to home!");
-  res.render("index", { title: "Express" });
+  res.render("index", { title: "Wiki API" });
 });
 
 export default router;
