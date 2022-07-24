@@ -7,7 +7,7 @@
     "prestart": "yarn build",
     "start": "cross-env NODE_ENV=development node build/index.js",
     "preserve": "yarn build",
-    "serve": "cross-env NODE_ENV=production concurrently \"npx tsc --watch\" \"nodemon -q build/index.js\""
+    "serve": "cross-env NODE_ENV=production concurrently \"tsc --watch\" \"nodemon -q build/index.js\""
   },
   "dependencies": {
     "@types/cookie-parser": "^1.4.3",

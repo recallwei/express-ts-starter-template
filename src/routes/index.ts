@@ -8,7 +8,8 @@ const router: Router = express.Router();
  * @return {object} 200 - OK
  */
 router.get("/", function (req: Request, res: Response, next: NextFunction) {
-  res.render("index", { title: "Express" });
+  res.send("Welcome to home!");
+  //res.render("index", { title: "Express" });
 });
 
 export default router;
