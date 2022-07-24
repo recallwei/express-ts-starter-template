@@ -11,14 +11,14 @@ import docsRouter from "./routes/docs";
 const app: Express = express();
 
 // view engine setup
-app.set("views", path.join(__dirname, "views"));
+app.set("views", path.join(__dirname, "../views"));
 app.set("view engine", "ejs");
 
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "../static", "../src/public")));
 
 const options = {
   info: {
@@ -58,8 +58,7 @@ app.use(function (err: any, req: Request, res: Response, next: NextFunction) {
   res.locals.error = req.app.get("env") === "development" ? err : {};
   // render the error page
   res.status(err.status || 500);
-  console.log(err);
-  // res.render("error");
+  res.render("error");
 });
 
 export default app;

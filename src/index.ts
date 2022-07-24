@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 /**
  * Module dependencies.
  */
@@ -7,6 +5,7 @@
 import app from "./app";
 import http from "http";
 import dotenv from "dotenv";
+
 var debug = require("debug")("wiki-api:server");
 
 /**
