@@ -5,9 +5,9 @@
   "scripts": {
     "build": "rimraf dist && tsc -p .",
     "prestart": "yarn build",
-    "start": "cross-env NODE_ENV=development node dist/index.js",
-    "preserve": "yarn build",
-    "serve": "cross-env NODE_ENV=production concurrently \"tsc --watch\" \"nodemon src/index.ts\"",
+    "start": "cross-env NODE_ENV=development concurrently \"tsc --watch\" \"nodemon src/index.ts\"",
+    "predev": "yarn build",
+    "dev": "cross-env NODE_ENV=production concurrently \"tsc --watch\" \"nodemon src/index.ts\"",
     "lint": "npx eslint . --ext .ts",
     "clear": "rimraf dist"
   },

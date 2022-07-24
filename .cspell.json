@@ -1,6 +1,12 @@
 {
   "version": "0.2",
   "language": "en",
-  "words": ["openapi", "webapps", "AZUREAPPSERVICE_PUBLISHPROFILE", "prestart"],
+  "words": [
+    "openapi",
+    "webapps",
+    "AZUREAPPSERVICE_PUBLISHPROFILE",
+    "prestart",
+    "predev"
+  ],
   "flagWords": []
 }
