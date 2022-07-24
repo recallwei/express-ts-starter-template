@@ -8,6 +8,7 @@
     "start": "cross-env NODE_ENV=development concurrently \"tsc --watch\" \"nodemon src/index.ts\"",
     "predev": "yarn build",
     "dev": "cross-env NODE_ENV=production concurrently \"tsc --watch\" \"nodemon src/index.ts\"",
+    "test": "yarn build && node dist/index",
     "production": "tsc --build --clean && tsc --build",
     "lint": "npx eslint . --ext .ts",
     "clear": "tsc --build --clean"
