@@ -63,4 +63,4 @@ jobs:
           app-name: "wiki-api"
           slot-name: "Production"
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_0CD957268D7B4DE99901237D0C9BCD64 }}
-          package: release
+          package: .
