@@ -1,0 +1,9 @@
+{
+  "watch": ["dist/index.js"],
+  "ext": "ts",
+  "ignore": ["*.test.ts"],
+  "delay": "3",
+  "execMap": {
+    "ts": "ts-node"
+  }
+}
