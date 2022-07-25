@@ -6,6 +6,7 @@ import app from "./app";
 import http from "http";
 import dotenv from "dotenv";
 import Debug from "debug";
+import { env } from "process";
 
 const debug: Debug.Debugger = Debug("wiki-api:server");
 
@@ -14,7 +15,7 @@ const debug: Debug.Debugger = Debug("wiki-api:server");
  */
 
 dotenv.config();
-// env.PORT = "80";
+env.PORT = "8080";
 // const port = process.env.SERVER_PORT;
 const port: string | number | false = normalizePort(process.env.PORT || "3001");
 app.set("port", port);
