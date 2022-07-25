@@ -15,8 +15,7 @@ const debug: Debug.Debugger = Debug("wiki-api:server");
  */
 
 dotenv.config();
-env.PORT = "80";
-env.HOST = "0.0.0.0";
+// env.PORT = "80";
 // const port = process.env.SERVER_PORT;
 const port: string | number | false = normalizePort(process.env.PORT || "3001");
 app.set("port", port);
@@ -31,13 +30,11 @@ const server: http.Server = http.createServer(app);
  * Listen on provided port, on all network interfaces.
  */
 
-server.listen(+port, "0.0.0.0", undefined, () => {
-  console.log(
-    `🚀[server]: Server is running at https://localhost:${port} ${app.settings.env}`
-  );
+server.listen(port, () => {
+  console.log(`🚀[server]: Server is running at https://localhost:${port}`);
 });
 
-// server.on("error", onError);
+server.on("error", onError);
 server.on("listening", onListening);
 
 /**
@@ -61,27 +58,27 @@ function normalizePort(val: string): string | number | false {
  * Event listener for HTTP server "error" event.
  */
 
-// function onError(error: any) {
-//   if (error.syscall !== "listen") {
-//     throw error;
-//   }
+function onError(error: any) {
+  if (error.syscall !== "listen") {
+    throw error;
+  }
 
-//   const bind = typeof port === "string" ? "Pipe " + port : "Port " + port;
+  const bind = typeof port === "string" ? "Pipe " + port : "Port " + port;
 
-//   // handle specific listen errors with friendly messages
-//   switch (error.code) {
-//     case "EACCES":
-//       console.error(bind + " requires elevated privileges");
-//       process.exit(1);
-//       break;
-//     case "EADDRINUSE":
-//       console.error(bind + " is already in use");
-//       process.exit(1);
-//       break;
-//     default:
-//       throw error;
-//   }
-// }
+  // handle specific listen errors with friendly messages
+  switch (error.code) {
+    case "EACCES":
+      console.error(bind + " requires elevated privileges");
+      process.exit(1);
+      break;
+    case "EADDRINUSE":
+      console.error(bind + " is already in use");
+      process.exit(1);
+      break;
+    default:
+      throw error;
+  }
+}
 
 /**
  * Event listener for HTTP server "listening" event.
