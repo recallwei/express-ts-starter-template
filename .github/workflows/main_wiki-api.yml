@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  Build:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -37,7 +37,7 @@ jobs:
           name: node-app
           path: release.zip
 
-  Deploy to Azure:
+  deploy-to-azure:
     runs-on: ubuntu-latest
     needs: build
     environment:
