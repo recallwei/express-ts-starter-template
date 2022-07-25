@@ -31,8 +31,10 @@ const server: http.Server = http.createServer(app);
  * Listen on provided port, on all network interfaces.
  */
 
-server.listen(port, () => {
-  console.log(`🚀[server]: Server is running at https://localhost:${port}`);
+server.listen(+port, "0.0.0.0", undefined, () => {
+  console.log(
+    `🚀[server]: Server is running at https://localhost:${port} ${app.settings.env}`
+  );
 });
 
 // server.on("error", onError);
