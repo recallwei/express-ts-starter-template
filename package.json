@@ -7,7 +7,7 @@
     "start": "node dist/index",
     "production": "tsc --build --clean && tsc --build",
     "predev": "yarn build",
-    "dev": "concurrently \"tsc --watch\" \"nodemon src/index.ts\"",
+    "dev": "concurrently \"tsc --watch\" \"nodemon dist/index\"",
     "test": "yarn build && node dist/index",
     "lint": "npx eslint . --ext .ts",
     "clear": "tsc --build --clean"
