@@ -6,7 +6,6 @@ import app from "./app";
 import http from "http";
 import dotenv from "dotenv";
 import Debug from "debug";
-import { env } from "node:process";
 
 const debug: Debug.Debugger = Debug("wiki-api:server");
 
