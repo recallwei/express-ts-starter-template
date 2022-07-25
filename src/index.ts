@@ -4,7 +4,7 @@
 
 import app from "./app";
 import http from "http";
-import * as dotenv from "dotenv";
+import dotenv from "dotenv";
 import Debug from "debug";
 
 const debug: Debug.Debugger = Debug("wiki-api:server");

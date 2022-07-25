@@ -6,6 +6,7 @@
 .env.development
 .vscode
 package-lock.json
+.env
 
 # Misc
 .DS_Store
