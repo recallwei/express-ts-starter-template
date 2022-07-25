@@ -7,9 +7,12 @@ const router: Router = express.Router();
  * @tags Home
  * @return {object} 200 - OK
  */
-router.get("/", function (req: Request, res: Response, next: NextFunction) {
-  // res.send("Welcome to home!");
-  res.render("index", { title: "Wiki API" });
-});
+router.get(
+  "/",
+  function (request: Request, response: Response, nextFunction: NextFunction) {
+    // res.send("Welcome to home!");
+    response.render("index", { title: "Wiki API" });
+  }
+);
 
 export default router;

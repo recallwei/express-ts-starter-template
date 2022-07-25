@@ -50,18 +50,28 @@ app.use("/", indexRouter);
 app.use("/docs", docsRouter);
 
 // catch 404 and forward to error handler
-app.use(function (err: any, req: Request, res: Response, next: NextFunction) {
-  next(createError(404));
+app.use(function (
+  error: any,
+  request: Request,
+  response: Response,
+  nextFunction: NextFunction
+) {
+  nextFunction(createError(404));
 });
 
 // error handler
-app.use(function (err: any, req: Request, res: Response, next: NextFunction) {
+app.use(function (
+  error: any,
+  request: Request,
+  response: Response,
+  nextFunction: NextFunction
+) {
   // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get("env") === "development" ? err : {};
+  response.locals.message = error.message;
+  response.locals.error = request.app.get("env") === "development" ? error : {};
   // render the error page
-  res.status(err.status || 500);
-  res.render("error");
+  response.status(error.status || 500);
+  response.render("error");
 });
 
 export default app;
