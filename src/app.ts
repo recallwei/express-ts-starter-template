@@ -1,6 +1,7 @@
 import express, { Express, Request, Response, NextFunction } from "express";
 import createError from "http-errors";
 import cookieParser from "cookie-parser";
+import bodyParser from "body-parser";
 import logger from "morgan";
 import swaggerJsdoc from "express-jsdoc-swagger";
 import path from "path";
@@ -18,6 +19,12 @@ app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(bodyParser.json());
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  })
+);
 
 // static files setup
 app.use("/public", express.static(path.join(__dirname, "../src/public")));
