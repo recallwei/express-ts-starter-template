@@ -7,7 +7,8 @@ import swaggerJsdoc from "express-jsdoc-swagger";
 import path from "path";
 
 import indexRouter from "./routes/index";
-import docsRouter from "./routes/docs";
+import docsRouter from "./routes/docs/index";
+import usersRouter from "./routes/users/index";
 
 const app: Express = express();
 
@@ -17,7 +18,7 @@ app.set("view engine", "ejs");
 
 app.use(logger("dev"));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(
@@ -55,6 +56,7 @@ swaggerJsdoc(app)(options);
 
 app.use("/", indexRouter);
 app.use("/docs", docsRouter);
+app.use("/users", usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function (

@@ -19,6 +19,7 @@
     "@types/http-errors": "^1.8.2",
     "@types/morgan": "^1.9.3",
     "@types/node": "16",
+    "@types/pg": "^8.6.5",
     "concurrently": "^7.3.0",
     "cookie-parser": "~1.4.4",
     "cross-env": "^7.0.3",
