@@ -1,16 +1,17 @@
-import { Pool, Client } from "pg";
+import dotenv from "dotenv";
+import { Pool, type ClientConfig } from "pg";
 
-const config = {
-  host: "bruce-postgresql.postgres.database.azure.com",
-  // Do not hard code your username and password.
-  // Consider using Node environment variables.
-  user: "bruce",
-  password: "SWWsww0920",
-  database: "postgres",
-  port: 5432,
+dotenv.config();
+
+const dbConfig: ClientConfig = {
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  port: process.env.DB_PORT ? ~~process.env.DB_PORT : undefined,
   ssl: true,
 };
 
-const client = new Client(config);
+const dbPool = new Pool(dbConfig);
 
-export { client, config };
+export { dbConfig, dbPool };

@@ -7,8 +7,7 @@ import swaggerJsdoc from "express-jsdoc-swagger";
 import path from "path";
 
 import indexRouter from "./routes/index";
-import docsRouter from "./routes/docs/index";
-import usersRouter from "./routes/users/index";
+import docMenusRouter from "./routes/docs/menus/index";
 
 const app: Express = express();
 
@@ -55,8 +54,7 @@ const options = {
 swaggerJsdoc(app)(options);
 
 app.use("/", indexRouter);
-app.use("/docs", docsRouter);
-app.use("/users", usersRouter);
+app.use("/docs/menus", docMenusRouter);
 
 // catch 404 and forward to error handler
 app.use(function (
