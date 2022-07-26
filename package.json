@@ -3,14 +3,13 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "build": "rimraf dist && tsc -p .",
+    "build": "yarn clear && tsc --build",
     "start": "node dist/index",
-    "production": "tsc --build --clean && tsc --build",
+    "clear": "tsc --build --clean",
     "predev": "yarn build",
     "dev": "concurrently \"tsc --watch\" \"nodemon dist/index\"",
     "test": "yarn build && node dist/index",
-    "lint": "npx eslint . --ext .ts",
-    "clear": "tsc --build --clean"
+    "lint": "npx eslint . --ext .ts"
   },
   "dependencies": {
     "@types/cookie-parser": "^1.4.3",

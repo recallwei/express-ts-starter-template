@@ -23,10 +23,10 @@ jobs:
       - name: npm install yarn
         run: npm install --location=global yarn
 
-      - name: yarn install, build, and test
+      - name: yarn install, build
         run: |
           yarn install
-          yarn production
+          yarn build
 
       - name: Zip artifact for deployment
         run: zip release.zip . -r
