@@ -6,7 +6,8 @@
     "webapps",
     "AZUREAPPSERVICE_PUBLISHPROFILE",
     "prestart",
-    "predev"
+    "predev",
+    "uuidv4"
   ],
   "flagWords": []
 }
