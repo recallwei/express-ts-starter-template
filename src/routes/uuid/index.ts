@@ -14,7 +14,10 @@ router.get("/", function (request: Request, response: Response) {
 });
 
 router.get("/view", function (request: Request, response: Response) {
-  response.render("uuid/index", { uuid: uuidv4() });
+  response.render("uuid/index", {
+    uuid: uuidv4(),
+    time: new Date().toISOString(),
+  });
 });
 
 export default router;

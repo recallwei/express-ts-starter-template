@@ -1,6 +1,80 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <title>UUID</title>
+    <link rel="shortcut icon" href="/static/images/favicon.png" />
+    <style>
+      .flex {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+      .copyText {
+        width: 400px;
+      }
+      .copyBtn {
+        margin-left: 4px;
+      }
+      .copySuccess {
+        color: green;
+        font-size: smaller;
+        font-weight: bold;
+        visibility: hidden;
+        margin-left: 4px;
+      }
+    </style>
+  </head>
   <body>
-    <h1><%= uuid %></h1>
+    <div class="flex">
+      <div>
+        <input readonly id="copyId" value="<%= uuid %>" class="copyText" />
+        <input
+          type="button"
+          onclick="copyId()"
+          value="复制 UUID"
+          readonly
+          class="copyBtn"
+        />
+        <span id="copyIdSuccess" class="copySuccess">复制成功</span>
+      </div>
+      <div>
+        <input readonly id="copyTime" value="<%= time %>" class="copyText" />
+        <input
+          type="button"
+          onclick="copyTime()"
+          value="复制 ISO 8601 格式时间"
+          readonly
+          class="copyBtn"
+        />
+        <span id="copyTimeSuccess" class="copySuccess">复制成功</span>
+      </div>
+    </div>
+    <script>
+      function copyId() {
+        const copyText = document.getElementById("copyId");
+        copyText.select();
+        document.execCommand("copy");
+        window.getSelection().removeAllRanges();
+        copyText.blur();
+        const copySuccess = document.getElementById("copyIdSuccess");
+        copySuccess.style.visibility = "visible";
+        setTimeout(() => {
+          copySuccess.style.visibility = "hidden";
+        }, 2000);
+      }
+
+      function copyTime() {
+        const copyText = document.getElementById("copyTime");
+        copyText.select();
+        document.execCommand("copy");
+        window.getSelection().removeAllRanges();
+        copyText.blur();
+        const copySuccess = document.getElementById("copyTimeSuccess");
+        copySuccess.style.visibility = "visible";
+        setTimeout(() => {
+          copySuccess.style.visibility = "hidden";
+        }, 2000);
+      }
+    </script>
   </body>
 </html>

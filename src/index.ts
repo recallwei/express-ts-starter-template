@@ -4,7 +4,6 @@
 
 import app from "./app";
 import http from "http";
-import domain from "domain";
 import dotenv from "dotenv";
 import Debug from "debug";
 
