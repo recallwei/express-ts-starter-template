@@ -1,4 +1,4 @@
-import express, { Router, Request, Response, NextFunction } from "express";
+import express, { Router, Request, Response } from "express";
 const router: Router = express.Router();
 
 /**
@@ -7,12 +7,9 @@ const router: Router = express.Router();
  * @tags Home
  * @return {object} 200 - OK
  */
-router.get(
-  "/",
-  function (request: Request, response: Response, nextFunction: NextFunction) {
-    // res.send("Welcome to home!");
-    response.render("index", { title: "Wiki API" });
-  }
-);
+router.get("/", function (request: Request, response: Response) {
+  // res.send("Welcome to home!");
+  response.render("index", { title: "Wiki API" });
+});
 
 export default router;
