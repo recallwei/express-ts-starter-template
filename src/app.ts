@@ -8,6 +8,7 @@ import path from "path";
 
 import indexRouter from "./routes/index";
 import docMenusRouter from "./routes/docs/menus/index";
+import uuidRouter from "./routes/uuid/index";
 
 const app: Express = express();
 
@@ -55,6 +56,7 @@ swaggerJsdoc(app)(options);
 
 app.use("/", indexRouter);
 app.use("/docs/menus", docMenusRouter);
+app.use("/uuid", uuidRouter);
 
 // catch 404 and forward to error handler
 app.use(function (

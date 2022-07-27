@@ -4,6 +4,7 @@
 
 import app from "./app";
 import http from "http";
+import domain from "domain";
 import dotenv from "dotenv";
 import Debug from "debug";
 
@@ -11,20 +12,20 @@ const debug: Debug.Debugger = Debug("wiki-api:server");
 
 dotenv.config();
 
-/**
+/*
  * Get port from environment and store in Express.
  */
 
 const port: string | number | false = normalizePort(process.env.PORT || "3001");
 app.set("port", port);
 
-/**
+/*
  * Create HTTP server.
  */
 
 const server: http.Server = http.createServer(app);
 
-/**
+/*
  * Listen on provided port, on all network interfaces.
  */
 
@@ -35,7 +36,7 @@ server.listen(port, () => {
 server.on("error", onError);
 server.on("listening", onListening);
 
-/**
+/*
  * Normalize a port into a number, string, or false.
  */
 
@@ -52,7 +53,7 @@ function normalizePort(val: string): string | number | false {
   return false;
 }
 
-/**
+/*
  * Event listener for HTTP server "error" event.
  */
 
@@ -78,7 +79,7 @@ function onError(error: any) {
   }
 }
 
-/**
+/*
  * Event listener for HTTP server "listening" event.
  */
 
