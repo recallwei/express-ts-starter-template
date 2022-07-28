@@ -39,10 +39,11 @@ const options = {
   },
   security: {
     bearerAuth: {
-      type: "http",
+      type: "apiKey",
       scheme: "bearer",
       bearerFormat: "JWT",
-      description: "bearer JWT Token",
+      description:
+        "JWT Authorization header using the Bearer scheme. Enter 'Bearer' [space] and then your token in the text input below. Example: 'Bearer 123456abcdef'",
       name: "Authorization",
       in: "header",
     },
