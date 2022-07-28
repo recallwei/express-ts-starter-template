@@ -4,12 +4,10 @@
 
 import app from "./app";
 import http from "http";
-import dotenv from "dotenv";
+import "dotenv/config";
 import Debug from "debug";
 
 const debug: Debug.Debugger = Debug("wiki-api:server");
-
-dotenv.config();
 
 /*
  * Get port from environment and store in Express.
