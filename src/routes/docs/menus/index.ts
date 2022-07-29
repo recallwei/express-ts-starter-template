@@ -1,10 +1,10 @@
 import express, { Router, Request, Response } from "express";
 import { dbPool } from "../../../db/index";
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, type menus } from "@prisma/client";
 
 const router: Router = express.Router();
 
-const prisma = new PrismaClient();
+const prisma: PrismaClient = new PrismaClient();
 
 /**
  * GET /docs/menus
@@ -30,7 +30,7 @@ router.get("/", async (request: Request, response: Response) => {
  * @return {object} 200 - OK
  */
 router.get("/v2", async (request: Request, response: Response) => {
-  const menus = await prisma.menus.findMany();
+  const menus: Array<menus> = await prisma.menus.findMany();
   response.status(200).json(menus);
 });
 
