@@ -104,5 +104,8 @@
     "skipLibCheck": true /* Skip type checking all .d.ts files. */
   },
   "include": ["./**/*"],
-  "exclude": ["node_modules", "dist", ".eslintrc.js"]
+  "exclude": ["node_modules", "dist", ".eslintrc.js"],
+  "ts-node": {
+    "require": ["tsconfig-paths/register"]
+  }
 }

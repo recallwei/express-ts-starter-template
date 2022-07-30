@@ -4,10 +4,10 @@
   "private": true,
   "scripts": {
     "build": "yarn clear && tsc --build",
-    "start": "node -r ts-node/register && ts-node -r tsconfig-paths/register dist/index",
+    "start": "ts-node dist/index",
     "clear": "tsc --build --clean",
     "predev": "yarn build",
-    "dev": "nodemon",
+    "dev": "nodemon exec ts-node dist/index",
     "test": "yarn build && ts-node -r tsconfig-paths/register dist/index",
     "lint": "npx eslint . --ext .ts"
   },
