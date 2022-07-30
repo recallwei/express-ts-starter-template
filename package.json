@@ -7,8 +7,7 @@
     "start": "ts-node dist/index",
     "clear": "tsc --build --clean",
     "predev": "yarn build",
-    "dev": "nodemon exec ts-node dist/index",
-    "test": "yarn build && ts-node -r tsconfig-paths/register dist/index",
+    "dev": "nodemon src/index",
     "lint": "npx eslint . --ext .ts"
   },
   "dependencies": {
