@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build": "yarn clear && tsc --build",
-    "start": "ts-node -r tsconfig-paths/register dist/index",
+    "start": "node -r ts-node/register && ts-node -r tsconfig-paths/register dist/index",
     "clear": "tsc --build --clean",
     "predev": "yarn build",
     "dev": "nodemon",
