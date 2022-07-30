@@ -1,5 +1,6 @@
 import dotenv from "dotenv";
 import { Pool, type ClientConfig } from "pg";
+import { PrismaClient } from "@prisma/client";
 
 dotenv.config();
 
@@ -14,4 +15,6 @@ const dbConfig: ClientConfig = {
 
 const dbPool = new Pool(dbConfig);
 
-export { dbConfig, dbPool };
+const prisma: PrismaClient = new PrismaClient();
+
+export { dbConfig, dbPool, prisma };

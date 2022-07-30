@@ -6,9 +6,10 @@ import logger from "morgan";
 import swaggerJsdoc from "express-jsdoc-swagger";
 import path from "path";
 
-import indexRouter from "./routes/index";
-import docMenusRouter from "./routes/docs/menus/index";
-import uuidRouter from "./routes/uuid/index";
+import indexRouter from "./routes";
+import docMenusRouter from "./routes/docs/menus";
+import todoRouter from "./routes/todo";
+import uuidRouter from "./routes/uuid";
 
 const app: Express = express();
 
@@ -57,6 +58,7 @@ swaggerJsdoc(app)(options);
 
 app.use("/", indexRouter);
 app.use("/docs/menus", docMenusRouter);
+app.use("/todo", todoRouter);
 app.use("/uuid", uuidRouter);
 
 // catch 404 and forward to error handler

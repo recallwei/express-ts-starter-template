@@ -1,10 +1,8 @@
 import express, { Router, Request, Response } from "express";
-import { dbPool } from "../../../db/index";
-import { PrismaClient, type menus } from "@prisma/client";
+import { dbPool, prisma } from "../../../db";
+import { type menus } from "@prisma/client";
 
 const router: Router = express.Router();
-
-const prisma: PrismaClient = new PrismaClient();
 
 /**
  * GET /docs/menus
