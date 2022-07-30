@@ -1,5 +1,5 @@
 import express, { Router, Request, Response } from "express";
-import { prisma } from "../../db";
+import { prisma } from "dbContext";
 import { type todo } from "@prisma/client";
 
 const router: Router = express.Router();

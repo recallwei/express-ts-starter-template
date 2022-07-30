@@ -6,10 +6,10 @@ import logger from "morgan";
 import swaggerJsdoc from "express-jsdoc-swagger";
 import path from "path";
 
-import indexRouter from "./routes";
-import docMenusRouter from "./routes/docs/menus";
-import todoRouter from "./routes/todo";
-import uuidRouter from "./routes/uuid";
+import indexRouter from "routes/index";
+import docMenusRouter from "routes/docs/menus";
+import todoRouter from "routes/todo";
+import uuidRouter from "routes/uuid";
 
 const app: Express = express();
 

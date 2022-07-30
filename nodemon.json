@@ -1,7 +1,8 @@
 {
   "watch": ["src"],
-  "ext": "ts",
-  "ignore": ["*.test.ts"],
+  "ext": "ts,js",
+  "exec": "ts-node -r tsconfig-paths/register dist/index",
+  "ignore": ["node_modules", "*.test.ts"],
   "delay": "3",
   "execMap": {
     "ts": "ts-node"
