@@ -1,3 +1,14 @@
 # wiki-api
 
-一个基于 Express 的 Node.js API 项目。
+This is my personal API server.
+
+## Stack
+
+- Express
+- TypeScript
+- PostgreSQL
+- Prisma
+
+## Others
+
+- Host by Microsoft Azure.
