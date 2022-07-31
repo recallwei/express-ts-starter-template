@@ -7,7 +7,7 @@ const router: Router = express.Router();
  * GET /uuid
  * @summary UUID
  * @tags UUID
- * @return {string} 200 - OK
+ * @return {string} 200 - success response - application/json
  */
 router.get("/", function (request: Request, response: Response) {
   response.status(200).send(uuidv4());

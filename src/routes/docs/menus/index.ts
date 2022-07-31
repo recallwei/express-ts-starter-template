@@ -8,7 +8,7 @@ const router: Router = express.Router();
  * GET /docs/menus/v2
  * @summary Docs
  * @tags Docs
- * @return {object} 200 - OK
+ * @return {object} 200 - success response - application/json
  */
 router.get("/v2", async (request: Request, response: Response) => {
   try {
@@ -25,7 +25,7 @@ router.get("/v2", async (request: Request, response: Response) => {
  * GET /docs/menus
  * @summary Docs
  * @tags Docs
- * @return {object} 200 - OK
+ * @return {object} 200 - success response - application/json
  */
 router.get("/", async (request: Request, response: Response) => {
   const menus: Array<menus> = await prisma.menus.findMany();
