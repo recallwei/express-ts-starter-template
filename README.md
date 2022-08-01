@@ -1,6 +1,6 @@
 # wiki-api
 
-This is my personal API server
+This is my personal API server.
 
 ## Stack
 
