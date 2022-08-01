@@ -11,4 +11,4 @@ This is my personal API server.
 
 ## Others
 
-- Host by Microsoft Azure.
+- Host by Microsoft Azure
