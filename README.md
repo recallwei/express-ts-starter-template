@@ -1,6 +1,6 @@
 # wiki-api
 
-This is my personal API server.
+This is my personal API server
 
 ## Stack
 
@@ -11,4 +11,4 @@ This is my personal API server.
 
 ## Others
 
-- Host by Microsoft Azure.
+- Host by Microsoft Azure
