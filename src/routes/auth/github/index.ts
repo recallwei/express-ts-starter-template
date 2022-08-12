@@ -18,29 +18,30 @@ router.post(
     try {
       const requestToken = request.query.code;
       if (!requestToken) {
-        response.status(401).send("Authenticate failed.");
+        response.status(401).json("Authenticate failed.");
         return;
       }
+      console.log(requestToken);
       const tokenResponse = await axios({
         method: "POST",
         url:
           "https://github.com/login/oauth/access_token?" +
           `client_id=${process.env.GITHUB_CLIENT_ID}&` +
           `client_secret=${process.env.GITHUB_CLIENT_SECRET}&` +
-          `code=${requestToken}&`,
+          `code=${requestToken}`,
         headers: {
           accept: "application/json;charset=utf-8'",
         },
       });
-      response
-        .status(200)
-        .cookie("githubToken", tokenResponse.data.access_token, {
-          httpOnly: true,
-          expires: new Date(Date.now() + 1000 * 60 * 60 * 24),
-          secure: true,
-          encode: String,
-        })
-        .send(tokenResponse.data.access_token);
+      console.log(tokenResponse.data.access_token);
+      // response.cookie("githubToken", tokenResponse.data.access_token, {
+      //   httpOnly: false,
+      //   maxAge: 60 * 60 * 24 * 30 * 1000,
+      //   secure: false,
+      //   encode: String,
+      // });
+
+      response.status(200).json(tokenResponse.data.access_token);
     } catch (err) {
       next(err);
     }
