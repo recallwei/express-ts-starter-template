@@ -14,9 +14,12 @@ const router: Router = express.Router();
  */
 router.get("/redirect", async (request: Request, response: Response) => {
   try {
-    console.log(1);
     const requestToken = request.query.code;
     console.log("authorization code:", requestToken);
+    if (!requestToken) {
+      response.redirect(`http://localhost:5173`);
+      return;
+    }
     const tokenResponse = await axios({
       method: "POST",
       url:
@@ -28,20 +31,20 @@ router.get("/redirect", async (request: Request, response: Response) => {
         accept: "application/json",
       },
     });
+    response.redirect(`http://localhost:5173`);
+    // return;
+    // const accessToken = tokenResponse.data.access_token;
+    // console.log(`access token: ${accessToken}`);
 
-    const accessToken = tokenResponse.data.access_token;
-    console.log(`access token: ${accessToken}`);
-
-    const result = await axios({
-      method: "GET",
-      url: `https://api.github.com/user`,
-      headers: {
-        accept: "application/json",
-        Authorization: `token ${accessToken}`,
-      },
-    });
-    console.log(result.data);
-    response.redirect(`http://localhost:5173?token=${accessToken}`);
+    // const result = await axios({
+    //   method: "GET",
+    //   url: `https://api.github.com/user`,
+    //   headers: {
+    //     accept: "application/json",
+    //     Authorization: `token ${accessToken}`,
+    //   },
+    // });
+    // console.log(result.data);
   } catch (err) {
     console.log(err);
     response.status(404).json("Server Error");
