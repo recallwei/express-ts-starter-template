@@ -35,7 +35,7 @@ app.use("/static", express.static(path.join(__dirname, "../static")));
 
 const options = {
   info: {
-    title: "Bruce's Wiki API",
+    title: "Bruce World API",
     version: "1.0.0",
     description: "An API which is used to support the wiki website.",
   },

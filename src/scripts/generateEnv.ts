@@ -7,20 +7,20 @@ fs.stat(generatedPath, (error, stats) => {
   if (error) {
     fs.stat(envPath, (error, stats) => {
       if (error) {
-        console.log("🚀[Wiki API]: .env.production file Not Found!");
+        console.log("🚀[Bruce World]: .env.production file Not Found!");
       } else {
         fs.copyFile(envPath, generatedPath, (error) => {
           if (error) {
-            console.log("🚀[Wiki API]: Something went wrong!");
+            console.log("🚀[Bruce World]: Something went wrong!");
           } else {
-            console.log("🚀[Wiki API]: Generate successfully!");
+            console.log("🚀[Bruce World]: Generate successfully!");
           }
         });
       }
     });
   } else {
     console.log(
-      "🚀[Wiki API]: Already have a .env file, cannot generate again!"
+      "🚀[Bruce World]: Already have a .env file, cannot generate again!"
     );
   }
 });

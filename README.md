@@ -1,4 +1,4 @@
-# wiki-api
+# Bruce World API
 
 This is my personal API server.
 
