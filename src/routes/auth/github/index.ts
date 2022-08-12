@@ -17,7 +17,9 @@ router.post("/", async (request: Request, response: Response) => {
     const requestToken = request.query.code;
     console.log("authorization code:", requestToken);
     if (!requestToken) {
-      response.redirect(`http://localhost:5173`);
+      response.redirect(
+        process.env.TASKWARD_BASE_URL ?? "http://localhost:5173/"
+      );
       return;
     }
     const tokenResponse = await axios({
@@ -32,7 +34,7 @@ router.post("/", async (request: Request, response: Response) => {
       },
     });
     response.redirect(
-      `http://localhost:5173/login?accessToken=${tokenResponse.data.access_token}`
+      `${process.env.TASKWARD_BASE_URL}login?accessToken=${tokenResponse.data.access_token}`
     );
     // return;
     // const accessToken = tokenResponse.data.access_token;

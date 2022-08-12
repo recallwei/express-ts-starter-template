@@ -7,7 +7,8 @@
     "AZUREAPPSERVICE_PUBLISHPROFILE",
     "prestart",
     "predev",
-    "uuidv4"
+    "uuidv4",
+    "taskward"
   ],
   "flagWords": []
 }
