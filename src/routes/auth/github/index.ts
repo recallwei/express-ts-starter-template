@@ -30,7 +30,15 @@ router.post("/", async (request: Request, response: Response) => {
         accept: "application/json",
       },
     });
-    response.status(200).send(tokenResponse.data.access_token);
+    response
+      .status(200)
+      .send(tokenResponse.data.access_token)
+      .cookie("githubToken", tokenResponse.data.access_token, {
+        httpOnly: true,
+        expires: new Date(Date.now() + 1000 * 60 * 60 * 24),
+        secure: true,
+        encode: String,
+      });
   } catch (err) {
     console.log(err);
     response.status(401).json("Authenticate failed.");
