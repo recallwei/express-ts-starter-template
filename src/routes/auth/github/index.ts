@@ -18,10 +18,9 @@ router.post(
     try {
       const requestToken = request.query.code;
       if (!requestToken) {
-        response.status(401).json("Authenticate failed.");
+        response.status(401).json("Authenticate failed: No code.");
         return;
       }
-      console.log(requestToken);
       const tokenResponse = await axios({
         method: "POST",
         url:
@@ -33,20 +32,17 @@ router.post(
           accept: "application/json;charset=utf-8'",
         },
       });
-      console.log(tokenResponse.data.access_token);
-      // response.cookie("githubToken", tokenResponse.data.access_token, {
-      //   httpOnly: false,
-      //   maxAge: 60 * 60 * 24 * 30 * 1000,
-      //   secure: false,
-      //   encode: String,
-      // });
-
+      if (!tokenResponse.data.access_token) {
+        response.status(401).json("Authenticate failed: No token.");
+        return;
+      }
       response.status(200).json(tokenResponse.data.access_token);
     } catch (err) {
       next(err);
     }
   }
 );
+
 // return;
 // const accessToken = tokenResponse.data.access_token;
 // console.log(`access token: ${accessToken}`);
