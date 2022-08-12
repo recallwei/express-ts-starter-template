@@ -1,4 +1,4 @@
-import express, { Router, Request, Response } from "express";
+import express, { Router, Request, Response, NextFunction } from "express";
 import axios from "axios";
 import dotenv from "dotenv";
 
@@ -12,38 +12,40 @@ const router: Router = express.Router();
  * @tags Auth
  * @return {object} 200 - success response - application/json
  */
-router.post("/", async (request: Request, response: Response) => {
-  try {
-    const requestToken = request.query.code;
-    if (!requestToken) {
-      response.sendStatus(401);
-      return;
-    }
-    const tokenResponse = await axios({
-      method: "POST",
-      url:
-        "https://github.com/login/oauth/access_token?" +
-        `client_id=${process.env.GITHUB_CLIENT_ID}&` +
-        `client_secret=${process.env.GITHUB_CLIENT_SECRET}&` +
-        `code=${requestToken}&`,
-      headers: {
-        accept: "application/json",
-      },
-    });
-    response
-      .status(200)
-      .send(tokenResponse.data.access_token)
-      .cookie("githubToken", tokenResponse.data.access_token, {
-        httpOnly: true,
-        expires: new Date(Date.now() + 1000 * 60 * 60 * 24),
-        secure: true,
-        encode: String,
+router.post(
+  "/",
+  async (request: Request, response: Response, next: NextFunction) => {
+    try {
+      const requestToken = request.query.code;
+      if (!requestToken) {
+        response.status(401).send("Authenticate failed.");
+        return;
+      }
+      const tokenResponse = await axios({
+        method: "POST",
+        url:
+          "https://github.com/login/oauth/access_token?" +
+          `client_id=${process.env.GITHUB_CLIENT_ID}&` +
+          `client_secret=${process.env.GITHUB_CLIENT_SECRET}&` +
+          `code=${requestToken}&`,
+        headers: {
+          accept: "application/json;charset=utf-8'",
+        },
       });
-  } catch (err) {
-    console.log(err);
-    response.status(401).json("Authenticate failed.");
+      response
+        .status(200)
+        .cookie("githubToken", tokenResponse.data.access_token, {
+          httpOnly: true,
+          expires: new Date(Date.now() + 1000 * 60 * 60 * 24),
+          secure: true,
+          encode: String,
+        })
+        .send(tokenResponse.data.access_token);
+    } catch (err) {
+      next(err);
+    }
   }
-});
+);
 // return;
 // const accessToken = tokenResponse.data.access_token;
 // console.log(`access token: ${accessToken}`);

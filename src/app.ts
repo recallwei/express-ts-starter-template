@@ -14,6 +14,16 @@ import authGitHubRouter from "@routes/auth/github";
 
 const app: Express = express();
 
+// cors config
+app.all("*", function (req: Request, res: Response, next: NextFunction) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
+  res.header("X-Powered-By", " 3.2.1");
+  res.header("Content-Type", "application/json;charset=utf-8");
+  next();
+});
+
 // view engine setup
 app.set("views", path.join(__dirname, "../views"));
 app.set("view engine", "ejs");
@@ -70,9 +80,9 @@ app.use(function (
   error: any,
   request: Request,
   response: Response,
-  nextFunction: NextFunction
+  next: NextFunction
 ) {
-  nextFunction(createError(404));
+  next(createError(404));
 });
 
 // error handler
