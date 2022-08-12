@@ -12,7 +12,7 @@ const router: Router = express.Router();
  * @tags Auth
  * @return {object} 200 - success response - application/json
  */
-router.get("/redirect", async (request: Request, response: Response) => {
+router.post("/", async (request: Request, response: Response) => {
   try {
     const requestToken = request.query.code;
     console.log("authorization code:", requestToken);
@@ -26,12 +26,14 @@ router.get("/redirect", async (request: Request, response: Response) => {
         "https://github.com/login/oauth/access_token?" +
         `client_id=${process.env.GITHUB_CLIENT_ID}&` +
         `client_secret=${process.env.GITHUB_CLIENT_SECRET}&` +
-        `code=${requestToken}`,
+        `code=${requestToken}&`,
       headers: {
         accept: "application/json",
       },
     });
-    response.redirect(`http://localhost:5173`);
+    response.redirect(
+      `http://localhost:5173/login?accessToken=${tokenResponse.data.access_token}`
+    );
     // return;
     // const accessToken = tokenResponse.data.access_token;
     // console.log(`access token: ${accessToken}`);
