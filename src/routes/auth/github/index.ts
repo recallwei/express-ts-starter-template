@@ -15,11 +15,8 @@ const router: Router = express.Router();
 router.post("/", async (request: Request, response: Response) => {
   try {
     const requestToken = request.query.code;
-    console.log("authorization code:", requestToken);
     if (!requestToken) {
-      response.redirect(
-        process.env.TASKWARD_BASE_URL ?? "http://localhost:5173/"
-      );
+      response.sendStatus(401);
       return;
     }
     const tokenResponse = await axios({
@@ -33,26 +30,24 @@ router.post("/", async (request: Request, response: Response) => {
         accept: "application/json",
       },
     });
-    response.redirect(
-      `${process.env.TASKWARD_BASE_URL}login?accessToken=${tokenResponse.data.access_token}`
-    );
-    // return;
-    // const accessToken = tokenResponse.data.access_token;
-    // console.log(`access token: ${accessToken}`);
-
-    // const result = await axios({
-    //   method: "GET",
-    //   url: `https://api.github.com/user`,
-    //   headers: {
-    //     accept: "application/json",
-    //     Authorization: `token ${accessToken}`,
-    //   },
-    // });
-    // console.log(result.data);
+    response.status(200).send(tokenResponse.data.access_token);
   } catch (err) {
     console.log(err);
-    response.status(404).json("Server Error");
+    response.status(401).json("Authenticate failed.");
   }
 });
+// return;
+// const accessToken = tokenResponse.data.access_token;
+// console.log(`access token: ${accessToken}`);
+
+// const result = await axios({
+//   method: "GET",
+//   url: `https://api.github.com/user`,
+//   headers: {
+//     accept: "application/json",
+//     Authorization: `token ${accessToken}`,
+//   },
+// });
+// console.log(result.data);
 
 export default router;
