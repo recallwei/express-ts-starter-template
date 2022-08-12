@@ -8,7 +8,8 @@
     "clear": "tsc --build --clean",
     "predev": "yarn build",
     "dev": "cross-env NODE_ENV=development nodemon src/index",
-    "lint": "npx eslint . --ext .ts"
+    "lint": "npx eslint . --ext .ts",
+    "generate-env": "ts-node src/scripts/generateEnv"
   },
   "dependencies": {
     "@prisma/client": "^4.1.1",
