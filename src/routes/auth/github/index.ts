@@ -36,25 +36,24 @@ router.post(
         response.status(401).json("Authenticate failed: No token.");
         return;
       }
-      response.status(200).json(tokenResponse.data.access_token);
+      const user = await axios({
+        method: "GET",
+        url: `https://api.github.com/user`,
+        headers: {
+          accept: "application/json",
+          Authorization: `token ${tokenResponse.data.access_token}`,
+        },
+      });
+      response
+        .status(200)
+        .json({
+          token: tokenResponse.data.access_token,
+          user: user?.data ?? null,
+        });
     } catch (err) {
       next(err);
     }
   }
 );
-
-// return;
-// const accessToken = tokenResponse.data.access_token;
-// console.log(`access token: ${accessToken}`);
-
-// const result = await axios({
-//   method: "GET",
-//   url: `https://api.github.com/user`,
-//   headers: {
-//     accept: "application/json",
-//     Authorization: `token ${accessToken}`,
-//   },
-// });
-// console.log(result.data);
 
 export default router;
