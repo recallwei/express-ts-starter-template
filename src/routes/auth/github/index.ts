@@ -6,6 +6,18 @@ dotenv.config();
 
 const router: Router = express.Router();
 
+const POST_GITHUB_TOKEN_URL = "https://github.com/login/oauth/access_token";
+const GET_GITHUB_USER_URL = "https://api.github.com/user";
+
+export interface UserInfo {
+  id: number | null;
+  name: string | null;
+  avatarUrl: string | null;
+  biography: string | null;
+  email: string | null;
+  location: string | null;
+}
+
 /**
  * POST /auth/github
  * @summary Auth
@@ -24,8 +36,8 @@ router.post(
       const tokenResponse = await axios({
         method: "POST",
         url:
-          "https://github.com/login/oauth/access_token?" +
-          `client_id=${process.env.GITHUB_CLIENT_ID}&` +
+          POST_GITHUB_TOKEN_URL +
+          `?client_id=${process.env.GITHUB_CLIENT_ID}&` +
           `client_secret=${process.env.GITHUB_CLIENT_SECRET}&` +
           `code=${requestToken}`,
         headers: {
@@ -38,18 +50,26 @@ router.post(
       }
       const user = await axios({
         method: "GET",
-        url: `https://api.github.com/user`,
+        url: GET_GITHUB_USER_URL,
         headers: {
           accept: "application/json",
           Authorization: `token ${tokenResponse.data.access_token}`,
         },
       });
-      response
-        .status(200)
-        .json({
-          token: tokenResponse.data.access_token,
-          user: user?.data ?? null,
-        });
+      const userInfo: UserInfo | null = user.data
+        ? {
+            id: user.data.id,
+            name: user.data.name ?? user.data.login,
+            avatarUrl: user.data.avatar_url,
+            biography: user.data.bio,
+            email: user.data.email,
+            location: user.data.location,
+          }
+        : null;
+      response.status(200).json({
+        token: tokenResponse.data.access_token,
+        user: userInfo,
+      });
     } catch (err) {
       next(err);
     }
