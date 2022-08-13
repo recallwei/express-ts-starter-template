@@ -9,7 +9,7 @@ const router: Router = express.Router();
  * @return {object} 200 - OK
  */
 router.get("/", function (request: Request, response: Response) {
-  response.render("index", { title: "Wiki API" });
+  response.render("index", { title: "Bruce World API" });
 });
 
 export default router;
