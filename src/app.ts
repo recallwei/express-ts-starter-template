@@ -86,12 +86,7 @@ app.use(function (
 });
 
 // error handler
-app.use(function (
-  error: any,
-  request: Request,
-  response: Response,
-  next: NextFunction
-) {
+app.use(function (error: any, request: Request, response: Response) {
   // set locals, only providing error in development
   response.locals.message = error.message;
   response.locals.error = request.app.get("env") === "development" ? error : {};
