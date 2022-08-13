@@ -17,7 +17,7 @@ const app: Express = express();
 // cors config
 app.all("*", function (req: Request, res: Response, next: NextFunction) {
   res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With,Authorization");
   res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
   res.header("X-Powered-By", " 3.2.1");
   // res.header("Content-Type", "application/json;charset=utf-8");

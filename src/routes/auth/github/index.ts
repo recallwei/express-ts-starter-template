@@ -18,8 +18,29 @@ export interface UserInfo {
   location: string | null;
 }
 
+async function getUserInfoByToken(token: string): Promise<UserInfo | null> {
+  const user = await axios({
+    method: "GET",
+    url: GET_GITHUB_USER_URL,
+    headers: {
+      accept: "application/json;charset=utf-8",
+      Authorization: `token ${token}`,
+    },
+  });
+  return user.data
+    ? {
+        id: user.data.id,
+        name: user.data.name ?? user.data.login,
+        avatarUrl: user.data.avatar_url,
+        biography: user.data.bio,
+        email: user.data.email,
+        location: user.data.location,
+      }
+    : null;
+}
+
 /**
- * POST /auth/github
+ * GET /auth/github/user
  * @summary Auth
  * @tags Auth
  * @return {object} 200 - success response - application/json
@@ -41,34 +62,56 @@ router.post(
           `client_secret=${process.env.GITHUB_CLIENT_SECRET}&` +
           `code=${requestToken}`,
         headers: {
-          accept: "application/json;charset=utf-8'",
+          accept: "application/json;charset=utf-8",
         },
       });
       if (!tokenResponse.data.access_token) {
         response.status(401).json("Authenticate failed: No token.");
         return;
       }
-      const user = await axios({
-        method: "GET",
-        url: GET_GITHUB_USER_URL,
-        headers: {
-          accept: "application/json",
-          Authorization: `token ${tokenResponse.data.access_token}`,
-        },
-      });
-      const userInfo: UserInfo | null = user.data
-        ? {
-            id: user.data.id,
-            name: user.data.name ?? user.data.login,
-            avatarUrl: user.data.avatar_url,
-            biography: user.data.bio,
-            email: user.data.email,
-            location: user.data.location,
-          }
-        : null;
+
+      const userInfo = await getUserInfoByToken(
+        tokenResponse.data.access_token
+      );
+
       response.status(200).json({
         token: tokenResponse.data.access_token,
         user: userInfo,
+      });
+    } catch (err) {
+      next(err);
+    }
+  }
+);
+
+/**
+ * GET /auth/github
+ * @summary Auth
+ * @tags Auth
+ * @return {object} 200 - success response - application/json
+ */
+router.get(
+  "/user",
+  async (request: Request, response: Response, next: NextFunction) => {
+    try {
+      if (
+        !request.headers.authorization ||
+        request.headers.authorization?.split(" ")[0] !== "gt"
+      ) {
+        response.status(401).json("Authenticate failed: No token.");
+        return;
+      }
+
+      const githubToken = request.headers.authorization.split(" ")[1];
+      if (!githubToken) {
+        response.status(401).json("Authenticate failed: No token.");
+        return;
+      }
+
+      const userInfo = await getUserInfoByToken(githubToken);
+
+      response.status(200).json({
+        userInfo,
       });
     } catch (err) {
       next(err);
