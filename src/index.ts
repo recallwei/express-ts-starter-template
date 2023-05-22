@@ -1,53 +1,49 @@
-/**
- * Module dependencies.
- */
+import 'dotenv/config'
 
-import app from "./app";
-import http from "http";
-import "dotenv/config";
-import Debug from "debug";
+import Debug from 'debug'
+import http from 'http'
 
-const debug: Debug.Debugger = Debug("wiki-api:server");
+import app from './app'
 
-/*
- * Get port from environment and store in Express.
- */
+const DEFAULT_PORT = '3000'
 
-const port: string | number | false = normalizePort(process.env.PORT || "3001");
-app.set("port", port);
+const debug: Debug.Debugger = Debug('wiki-api:server')
+
+const port: string | number | false = normalizePort(process.env.PORT || DEFAULT_PORT)
+app.set('port', port)
 
 /*
  * Create HTTP server.
  */
 
-const server: http.Server = http.createServer(app);
+const server: http.Server = http.createServer(app)
 
 /*
  * Listen on provided port, on all network interfaces.
  */
 
 server.listen(port, () => {
-  console.log(`🚀[server]: Server is running on port ${port}`);
-});
+  console.log(`🚀[server]: Server is running on port ${port}`)
+})
 
-server.on("error", onError);
-server.on("listening", onListening);
+server.on('error', onError)
+server.on('listening', onListening)
 
 /*
  * Normalize a port into a number, string, or false.
  */
 
 function normalizePort(val: string): string | number | false {
-  const port = parseInt(val, 10);
+  const port = parseInt(val, 10)
   if (isNaN(port)) {
     // named pipe
-    return val;
+    return val
   }
   if (port >= 0) {
     // port number
-    return port;
+    return port
   }
-  return false;
+  return false
 }
 
 /*
@@ -55,24 +51,24 @@ function normalizePort(val: string): string | number | false {
  */
 
 function onError(error: any) {
-  if (error.syscall !== "listen") {
-    throw error;
+  if (error.syscall !== 'listen') {
+    throw error
   }
 
-  const bind = typeof port === "string" ? "Pipe " + port : "Port " + port;
+  const bind = typeof port === 'string' ? `Pipe ${port}` : `Port ${port}`
 
   // handle specific listen errors with friendly messages
   switch (error.code) {
-    case "EACCES":
-      console.error(bind + " requires elevated privileges");
-      process.exit(1);
-      break;
-    case "EADDRINUSE":
-      console.error(bind + " is already in use");
-      process.exit(1);
-      break;
+    case 'EACCES':
+      console.error(`${bind} requires elevated privileges`)
+      process.exit(1)
+      break
+    case 'EADDRINUSE':
+      console.error(`${bind} is already in use`)
+      process.exit(1)
+      break
     default:
-      throw error;
+      throw error
   }
 }
 
@@ -81,7 +77,7 @@ function onError(error: any) {
  */
 
 function onListening() {
-  const addr = server.address();
-  const bind = typeof addr === "string" ? "pipe " + addr : "port " + addr?.port;
-  debug("Listening on " + bind);
+  const addr = server.address()
+  const bind = typeof addr === 'string' ? `pipe ${addr}` : `port ${addr?.port}`
+  debug(`Listening on ${bind}`)
 }

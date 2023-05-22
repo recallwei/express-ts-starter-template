@@ -1,5 +1,6 @@
 {
-  "watch": ["src/**/*", "views/**/*"],
-  "ext": "ts,js,json,ejs",
-  "ignore": ["node_modules", "*.test.ts"]
+  "watch": ["src"],
+  "ext": "js,ts,json,yml",
+  "ignore": ["dist", "node_modules"],
+  "exec": "node -r ts-node/register -r tsconfig-paths/register ./src/index.ts"
 }

@@ -1,6 +1,7 @@
-import express, { Router, Request, Response } from "express";
+import type { Request, Response, Router } from 'express'
+import express from 'express'
 
-const router: Router = express.Router();
+const router: Router = express.Router()
 
 /**
  * GET /
@@ -8,8 +9,8 @@ const router: Router = express.Router();
  * @tags Home
  * @return {object} 200 - OK
  */
-router.get("/", function (request: Request, response: Response) {
-  response.render("index", { title: "Bruce World API" });
-});
+router.get('/', function (request: Request, response: Response) {
+  response.render('index', { title: 'Bruce World API' })
+})
 
-export default router;
+export default router
