@@ -10,7 +10,7 @@ const router: Router = express.Router()
  * @return {object} 200 - OK
  */
 router.get('/', function (request: Request, response: Response) {
-  response.render('index', { title: 'Bruce World API' })
+  response.json({ message: 'Welcome to EST, this is a demo API!' })
 })
 
 export default router

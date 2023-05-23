@@ -1,3 +1,3 @@
-import { v4 as uuid } from 'uuid'
+import { v4 } from 'uuid'
 
-export const getUuid = () => uuid()
+export const getUuid = () => v4()

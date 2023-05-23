@@ -6,9 +6,8 @@ import createError from 'http-errors'
 import logger from 'morgan'
 import path from 'path'
 
+import indexRouter from '@/routes'
 import authGitHubRouter from '@/routes/auth/github'
-import indexRouter from '@/routes/index'
-import uuidRouter from '@/routes/uuid'
 
 const app: Express = express()
 
@@ -51,7 +50,6 @@ const options = {
 swaggerJsdoc(app)(options)
 
 app.use('/', indexRouter)
-app.use('/uuid', uuidRouter)
 app.use('/auth/github', authGitHubRouter)
 
 // catch 404 error
@@ -62,6 +60,7 @@ app.use((error: any, request: Request, response: Response, next: NextFunction) =
 // error handler
 app.use((error: any, request: Request, response: Response) => {
   // set locals, only providing error in development
+  console.log(response)
   response.locals.message = error.message
   response.locals.error = request.app.get('env') === 'development' ? error : {}
   // render the error page

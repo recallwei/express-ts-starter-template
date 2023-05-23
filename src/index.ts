@@ -3,6 +3,8 @@ import 'dotenv/config'
 import Debug from 'debug'
 import http from 'http'
 
+import { Server } from '@/base'
+
 import app from './app'
 
 const DEFAULT_PORT = '3000'
@@ -10,11 +12,15 @@ const DEFAULT_PORT = '3000'
 const debug: Debug.Debugger = Debug('wiki-api:server')
 
 const port: string | number | false = normalizePort(process.env.PORT || DEFAULT_PORT)
+
 app.set('port', port)
 
 /*
  * Create HTTP server.
  */
+
+const testServer = new Server(3000)
+testServer.onReady()
 
 const server: http.Server = http.createServer(app)
 
