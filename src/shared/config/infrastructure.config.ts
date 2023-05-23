@@ -6,7 +6,7 @@ export const GlobalConfig = Object.freeze({
   IS_TEST: getEnvStr('NODE_ENV', 'development') === 'test',
   IS_DEVELOPMENT: getEnvStr('NODE_ENV', 'development') === 'development',
   IS_PRODUCTION: getEnvStr('NODE_ENV', 'development') === 'production',
-  PORT: getEnvNumber('PORT', 5000)
+  PORT: getEnvNumber('PORT', 3000)
 })
 
 export const GlobalAppConfig = Object.freeze({

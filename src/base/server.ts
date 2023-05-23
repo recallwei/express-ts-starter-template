@@ -1,5 +1,7 @@
+import bodyParser from 'body-parser'
 import type { Express } from 'express'
 import express from 'express'
+import logger from 'morgan'
 
 import { GlobalConfig } from '@/shared'
 // import type { Express, NextFunction, Request, Response } from 'express'
@@ -9,9 +11,9 @@ class Server {
 
   private port: number
 
-  constructor(port: number) {
+  constructor() {
     this.app = express()
-    this.port = port
+    this.port = GlobalConfig.PORT
   }
 
   // public start() {
@@ -21,8 +23,17 @@ class Server {
   // }
 
   private beforeRoutesInit() {
-    console.log('inject middlewares before routes init')
-    // console.log(this.app)
+    // Load middleware
+    this.app.use(logger('dev'))
+    this.app.use(express.json())
+    this.app.use(express.urlencoded({ extended: true }))
+    this.app.use(bodyParser.json())
+    this.app.use(bodyParser.urlencoded({ extended: true }))
+  }
+
+  private routesInit() {
+    // Load routes
+    this.app.use('/auth/github', authGitHubRouter)
   }
 
   private afterRoutesInit() {
@@ -32,6 +43,7 @@ class Server {
 
   public onReady() {
     this.beforeRoutesInit()
+    this.routesInit()
     this.afterRoutesInit()
     Server.showBanner()
   }
