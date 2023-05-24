@@ -44,6 +44,10 @@ pnpm dev
 pnpm build
 ```
 
+## Issue
+
+- [x] `chalk` v5.x doesn't work with `ts-node` well, use `chalk` v4.x instead.
+
 ## License
 
 [MIT](/LICENSE) License &copy; 2023 [Bruce Song](https://github.com/recallwei)
