@@ -14,7 +14,7 @@ const defaultUser: Prisma.UserCreateInput = {
   uuid: generateUUID(),
   username: 'BruceSong',
   email: 'recall4056@gmail.com',
-  password: 'xxxxxx',
+  password: '$2b$10$gDlPHrvol5b92cmlyg1oeO9r1jca9WS6WsL4nHWGw/nBUogZqijmu',
   name: 'Bruce Song',
   firstName: 'Bruce',
   lastName: 'Song',

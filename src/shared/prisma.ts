@@ -29,13 +29,13 @@ if (process.env.NODE_ENV === 'development') {
 export class PrismaAction {
   static deleted = () => ({
     deletedAt: {
-      equals: null
+      not: null
     }
   })
 
   static notDeleted = () => ({
     deletedAt: {
-      not: null
+      equals: null
     }
   })
 }

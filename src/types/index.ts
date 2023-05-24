@@ -7,7 +7,7 @@ interface BaseResponseModel {
 }
 
 interface OKResponseModel<T> extends BaseResponseModel {
-  data: T
+  data?: T
 }
 
 export type BaseResponse = Response<BaseResponseModel>
