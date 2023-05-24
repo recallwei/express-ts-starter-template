@@ -1,13 +1,15 @@
 import bodyParser from 'body-parser'
 import chalk from 'chalk'
 import Debug from 'debug'
-import type { Express } from 'express'
+import type { Express, NextFunction, Request, Response } from 'express'
 import express from 'express'
 import http from 'http'
+import createError from 'http-errors'
 import logger from 'morgan'
+import morgan from 'morgan'
 import path from 'path'
 
-import { testController } from '@/controllers'
+import routes from '@/routes'
 import { GlobalAppConfig, GlobalConfig } from '@/shared'
 
 class Server {
@@ -29,6 +31,7 @@ class Server {
     this.app.use(logger('dev'))
     this.app.use(express.json())
     this.app.use(express.urlencoded({ extended: true }))
+    this.app.use(morgan('tiny'))
     this.app.use(bodyParser.json())
     this.app.use(bodyParser.urlencoded({ extended: true }))
 
@@ -38,10 +41,27 @@ class Server {
   }
 
   private routesInit() {
-    this.app.use('/test', testController)
+    routes.forEach((route) => {
+      this.app.use(route.path, route.router)
+    })
   }
 
   private afterRoutesInit() {
+    // Catch 404 error
+    this.app.use((error: any, request: Request, response: Response, next: NextFunction) => {
+      next(createError(404))
+    })
+
+    // Error handler
+    this.app.use((error: any, request: Request, response: Response) => {
+      // console.log(response)
+      // console.log(error)
+      // response.locals.message = error.message
+      // response.locals.error = request.app.get('env') === 'development' ? error : {}
+      // response.status(error.status || 500)
+      response.render('error')
+    })
+
     this.app.set('port', this.port)
     this.server = http.createServer(this.app)
     this.server.listen(this.port, () => {

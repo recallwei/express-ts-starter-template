@@ -12,6 +12,11 @@ export const getAppVersion = () => {
   return packageJSONData.version
 }
 
+export const getAppDescription = () => {
+  const packageJSONData = readPackageJSONSync()
+  return packageJSONData.description
+}
+
 // TODO: Unit Test
 export const getAuthorInfo = (): { name: string; email: string; url: string } => {
   const packageJSONData = readPackageJSONSync()

@@ -1,20 +1,20 @@
 import { PrismaClient } from '@prisma/client'
 
 interface CustomNodeJSGlobal extends Global {
-  prisma: PrismaClient
+  PrismaQuery: PrismaClient
 }
 
 declare const global: CustomNodeJSGlobal
 
-const prisma: PrismaClient =
-  global.prisma ||
+export const PrismaQuery: PrismaClient =
+  global.PrismaQuery ||
   new PrismaClient({
     log: ['query', 'info', 'warn', 'error'],
     errorFormat: 'pretty'
   })
 
 // Logging Middleware
-prisma.$use(async (params, next) => {
+PrismaQuery.$use(async (params, next) => {
   const before = Date.now()
   const result = await next(params)
   const after = Date.now()
@@ -23,7 +23,19 @@ prisma.$use(async (params, next) => {
 })
 
 if (process.env.NODE_ENV === 'development') {
-  global.prisma = prisma
+  global.PrismaQuery = PrismaQuery
 }
 
-export { prisma as PrismaQuery }
+export class PrismaAction {
+  static deleted = () => ({
+    deletedAt: {
+      equals: null
+    }
+  })
+
+  static notDeleted = () => ({
+    deletedAt: {
+      not: null
+    }
+  })
+}
