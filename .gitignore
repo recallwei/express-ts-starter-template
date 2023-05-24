@@ -30,3 +30,5 @@ coverage
 *.sln
 *.sw?
 *.zip
+
+temp

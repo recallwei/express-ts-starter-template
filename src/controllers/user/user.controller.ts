@@ -5,11 +5,11 @@ const router: Router = express.Router()
 
 /**
  * GET /
- * @summary Home
- * @tags Home
+ * @summary Test
+ * @tags Test
  * @return {object} 200 - OK
  */
-router.get('/', function (request: Request, response: Response) {
+router.get('/test', function (request: Request, response: Response) {
   response.json({ message: 'Welcome to EST, this is a demo API!' })
 })
 

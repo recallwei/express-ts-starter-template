@@ -1,7 +1,6 @@
 import { randAvatar, randFullAddress, randPastDate, randPhoneNumber } from '@ngneat/falso'
 import type { Prisma } from '@prisma/client'
 import { Gender, PrismaClient, Role } from '@prisma/client'
-// NOTE: chalk must use v4.x
 import chalk from 'chalk'
 
 import { generateUUID } from '@/shared'

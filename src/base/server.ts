@@ -1,26 +1,28 @@
 import bodyParser from 'body-parser'
+import chalk from 'chalk'
+import Debug from 'debug'
 import type { Express } from 'express'
 import express from 'express'
+import http from 'http'
 import logger from 'morgan'
+import path from 'path'
 
-import { GlobalConfig } from '@/shared'
-// import type { Express, NextFunction, Request, Response } from 'express'
+import { testController } from '@/controllers'
+import { GlobalAppConfig, GlobalConfig } from '@/shared'
 
 class Server {
   private app: Express
 
   private port: number
 
+  server?: http.Server
+
+  private debug: Debug.Debugger = Debug(`${GlobalAppConfig.APP_NAME}:server`)
+
   constructor() {
     this.app = express()
     this.port = GlobalConfig.PORT
   }
-
-  // public start() {
-  //   this.app.listen(this.port, () => {
-  //     console.log(`Server is listening on port ${this.port}`)
-  //   })
-  // }
 
   private beforeRoutesInit() {
     // Load middleware
@@ -29,49 +31,43 @@ class Server {
     this.app.use(express.urlencoded({ extended: true }))
     this.app.use(bodyParser.json())
     this.app.use(bodyParser.urlencoded({ extended: true }))
+
+    // Static files setup
+    this.app.use('/public', express.static(path.join(__dirname, '@/public')))
+    this.app.use('/static', express.static(path.join(__dirname, '@/static')))
   }
 
   private routesInit() {
-    // Load routes
-    this.app.use('/auth/github', authGitHubRouter)
+    this.app.use('/test', testController)
   }
 
   private afterRoutesInit() {
-    console.log('add utils after routes init')
-    // console.log(this.app)
+    this.app.set('port', this.port)
+    this.server = http.createServer(this.app)
+    this.server.listen(this.port, () => {
+      Server.showBanner()
+    })
   }
 
-  public onReady() {
+  public init() {
     this.beforeRoutesInit()
     this.routesInit()
     this.afterRoutesInit()
-    Server.showBanner()
   }
 
   private static showBanner() {
-    switch (GlobalConfig.ENVIRONMENT) {
-      case 'development':
-        console.log(`
-        🚀[server]: Server is running on port ${GlobalConfig.PORT}\n
-        dev env
-        `)
-        break
-      case 'production':
-        console.log(`
-        🚀[server]: Server is running on port ${GlobalConfig.PORT}\n
-        prod env
-        `)
-        break
-      case 'test':
-        console.log(`
-        🚀[server]: Server is running on port ${GlobalConfig.PORT}\n
-        test env
-        `)
-        break
-      default:
-        break
-    }
+    console.log(
+      chalk.green(`
+[${GlobalAppConfig.APP_NAME}] Server is running on port ${GlobalConfig.PORT}
+[${GlobalAppConfig.APP_NAME}] v${GlobalAppConfig.APP_VERSION}
+`)
+    )
   }
 }
 
-export { Server }
+const startServer = () => {
+  const server = new Server()
+  server.init()
+}
+
+export { Server, startServer }

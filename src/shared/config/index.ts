@@ -1,1 +1,1 @@
-export * from './infrastructure.config'
+export * from './global-config'

@@ -1,5 +1,6 @@
 import { getEnvNumber, getEnvStr } from './environments.private'
-import type { ENV } from './infrastructure.type.private'
+import type { ENV } from './global-config.type'
+import { getAppName, getAppVersion, getAuthorInfo } from './package-json-reader.private'
 
 export const GlobalConfig = Object.freeze({
   ENVIRONMENT: <ENV>getEnvStr('NODE_ENV', 'development'),
@@ -10,7 +11,9 @@ export const GlobalConfig = Object.freeze({
 })
 
 export const GlobalAppConfig = Object.freeze({
-  APP_NAME: getEnvStr('APP_NAME', 'est-app')
+  APP_NAME: getEnvStr('APP_NAME', getAppName()),
+  APP_VERSION: getAppVersion(),
+  APP_AUTHOR: getAuthorInfo()
 })
 
 export const GlobalJWTConfig = Object.freeze({
