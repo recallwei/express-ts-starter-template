@@ -4,20 +4,21 @@ import express from 'express'
 
 import type { JWTUserModel } from '@/core'
 import { JWTManager } from '@/core'
+import type { UserSignupResponse } from '@/services'
 import { UserService } from '@/services'
 import type { UserSignupInput } from '@/services/user.model'
-import type { OKResponse } from '@/types'
+import type { BaseResponse } from '@/types'
 
 const router: Router = express.Router()
 
-router.get('/', async (_, response: OKResponse<User[]>) => {
+router.get('/', async (_, response: BaseResponse<User[]>) => {
   const users = await UserService.getUsers()
   response.status(200).json({
     data: users
   })
 })
 
-router.get('/:id', async (request: Request, response: OKResponse<User>) => {
+router.get('/:id', async (request: Request, response: BaseResponse<User>) => {
   const id = Number(request.params.id)
   const user = await UserService.getUserById(id)
   if (user) {
@@ -31,7 +32,7 @@ router.get('/:id', async (request: Request, response: OKResponse<User>) => {
   }
 })
 
-router.post('/', async (request: Request, response: OKResponse<Partial<User>>) => {
+router.post('/', async (request: Request, response: UserSignupResponse) => {
   const { username, password, confirmPassword } = request.body as UserSignupInput
 
   // Required fields
@@ -79,7 +80,10 @@ router.post('/', async (request: Request, response: OKResponse<Partial<User>>) =
     }
 
     response.status(201).json({
-      data: UserService.filterSafeUserInfo(user)
+      data: {
+        user: UserService.filterSafeUserInfo(user),
+        accessToken
+      }
     })
   } catch (error) {
     response.status(400).json({
