@@ -4,7 +4,7 @@ import bcrypt from 'bcrypt'
 
 import { generateUUID, PrismaAction, PrismaQuery } from '@/shared'
 
-import type { UserSignupModel } from './user.model'
+import type { UserSignupModel, UserUpdateModel } from './user.model'
 
 export default {
   getUsers: async (): Promise<User[]> => {
@@ -40,9 +40,27 @@ export default {
     })
   },
 
+  updateUser: async (id: number, user: UserUpdateModel): Promise<User | null> => {
+    return PrismaQuery.user.update({
+      where: {
+        id
+      },
+      data: {
+        ...user,
+        updatedAt: new Date().toISOString()
+      }
+    })
+  },
+
   deleteUser: async (id: number): Promise<User | null> => {
-    return PrismaQuery.user.delete({
-      where: { id }
+    return PrismaQuery.user.update({
+      where: {
+        id
+      },
+      data: {
+        deletedAt: new Date().toISOString(),
+        deletedBy: 'Admin'
+      }
     })
   },
 
@@ -68,7 +86,9 @@ export default {
 
   verifyUser: async (id: number): Promise<User | null> => {
     return PrismaQuery.user.update({
-      where: { id },
+      where: {
+        id
+      },
       data: {
         verified: true
       }
@@ -77,7 +97,9 @@ export default {
 
   banUser: async (id: number): Promise<User | null> => {
     return PrismaQuery.user.update({
-      where: { id },
+      where: {
+        id
+      },
       data: {
         enabled: false
       }
@@ -86,7 +108,9 @@ export default {
 
   enableUser: async (id: number): Promise<User | null> => {
     return PrismaQuery.user.update({
-      where: { id },
+      where: {
+        id
+      },
       data: {
         enabled: true
       }
@@ -95,7 +119,9 @@ export default {
 
   authorizeUser: async (id: number): Promise<User | null> => {
     return PrismaQuery.user.update({
-      where: { id },
+      where: {
+        id
+      },
       data: {
         roles: [Role.USER, Role.ADMIN]
       }

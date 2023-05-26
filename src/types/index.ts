@@ -7,4 +7,4 @@ interface BaseResponseModel<T> {
   data?: T
 }
 
-export type BaseResponse<T> = Response<BaseResponseModel<T>>
+export type BaseResponse<T = any> = Response<BaseResponseModel<T>>
