@@ -2,7 +2,7 @@ import { sign, verify } from 'jsonwebtoken'
 
 import { GlobalJWTConfig } from '@/shared'
 
-import type { JWTUserModel } from './jwtManager.model'
+import type { JWTUserModel } from './model'
 
 export default {
   generateAccessToken: (user: JWTUserModel): string => {

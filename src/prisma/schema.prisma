@@ -83,17 +83,18 @@ model Auth {
 }
 
 model Setting {
-  id        Int       @id @default(autoincrement())
-  uuid      String    @unique @db.VarChar(1000)
-  key       String    @unique @db.VarChar(1000)
-  value     Json      @db.Json
-  enabled   Boolean   @default(true)
-  createdAt DateTime? @default(now()) @map("created_at") @db.Timestamptz(3)
-  createdBy String?   @map("created_by") @db.VarChar(255)
-  updatedAt DateTime? @updatedAt @map("updated_at") @db.Timestamptz(3)
-  updatedBy String?   @map("updated_by") @db.VarChar(255)
-  deletedAt DateTime? @map("deleted_at") @db.Timestamptz(3)
-  deletedBy String?   @map("deleted_by") @db.VarChar(255)
+  id          Int       @id @default(autoincrement())
+  uuid        String    @unique @db.VarChar(1000)
+  key         String    @unique @db.VarChar(1000)
+  value       Json?     @db.Json
+  description String    @db.VarChar(1500)
+  enabled     Boolean   @default(true)
+  createdAt   DateTime? @default(now()) @map("created_at") @db.Timestamptz(3)
+  createdBy   String?   @map("created_by") @db.VarChar(255)
+  updatedAt   DateTime? @updatedAt @map("updated_at") @db.Timestamptz(3)
+  updatedBy   String?   @map("updated_by") @db.VarChar(255)
+  deletedAt   DateTime? @map("deleted_at") @db.Timestamptz(3)
+  deletedBy   String?   @map("deleted_by") @db.VarChar(255)
 
   @@map("setting")
 }

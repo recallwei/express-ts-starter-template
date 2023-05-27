@@ -4,23 +4,45 @@ import express from 'express'
 
 import type { JWTUserModel } from '@/core'
 import { JWTManager } from '@/core'
-import type { UserSignupResponse } from '@/services'
-import { UserService } from '@/services'
-import type { UserSignupInput, UserUpdateInput } from '@/services/user.model'
-import type { BaseResponse } from '@/types'
+import type { UserSafeModel, UserSignupInputModel, UserSignupResponse, UserUpdateInputModel } from '@/services'
+import { UsersService } from '@/services'
+import type { BasePageResponse, BaseResponse, PageRequestModel } from '@/types'
 
 const router: Router = express.Router()
 
-router.get('/', async (_, response: BaseResponse<User[]>) => {
-  const users = await UserService.getUsers()
+router.get('/', async (request: Request, response: BasePageResponse<UserSafeModel[]>) => {
+  const { pageNum, pageSize } = request.query
+
+  if (!pageNum || !pageSize) {
+    response.status(400).json({
+      message: 'Page number and page size are required.'
+    })
+    return
+  }
+
+  if (typeof Number(pageNum) !== 'number' || typeof Number(pageSize) !== 'number') {
+    response.status(400).json({
+      message: 'Page number and page size must be numbers.'
+    })
+    return
+  }
+
+  const pageModel: PageRequestModel = {
+    pageNum: Number(pageNum),
+    pageSize: Number(pageSize)
+  }
+
+  const { users, ...pageResult } = await UsersService.getUsers(pageModel)
+
   response.status(200).json({
-    data: users
+    data: users.map((user) => UsersService.filterSafeUserInfo(user)),
+    ...pageResult
   })
 })
 
 router.get('/:id', async (request: Request, response: BaseResponse<User>) => {
   const id = Number(request.params.id)
-  const user = await UserService.getUserById(id)
+  const user = await UsersService.getUserById(id)
   if (user) {
     response.status(200).json({
       data: user
@@ -33,7 +55,7 @@ router.get('/:id', async (request: Request, response: BaseResponse<User>) => {
 })
 
 router.post('/', async (request: Request, response: UserSignupResponse) => {
-  const { username, password, confirmPassword } = request.body as UserSignupInput
+  const { username, password, confirmPassword } = request.body as UserSignupInputModel
 
   // Required fields
   if (!username?.trim() || !password?.trim() || !confirmPassword?.trim()) {
@@ -52,7 +74,7 @@ router.post('/', async (request: Request, response: UserSignupResponse) => {
   }
 
   // Check if username already exists
-  if (await UserService.alreadyExists(username)) {
+  if ((await UsersService.alreadyExists(username)).isExist) {
     response.status(409).json({
       message: 'Username already exists.'
     })
@@ -60,9 +82,9 @@ router.post('/', async (request: Request, response: UserSignupResponse) => {
   }
 
   try {
-    const user = await UserService.createUser({
+    const user = await UsersService.createUser({
       username,
-      password: await UserService.passwordHash(password)
+      password: await UsersService.passwordHash(password)
     })
 
     // Generate JWT token
@@ -81,7 +103,7 @@ router.post('/', async (request: Request, response: UserSignupResponse) => {
 
     response.status(201).json({
       data: {
-        user: UserService.filterSafeUserInfo(user),
+        user: UsersService.filterSafeUserInfo(user),
         accessToken
       }
     })
@@ -93,7 +115,7 @@ router.post('/', async (request: Request, response: UserSignupResponse) => {
   }
 })
 
-router.put('/:id', (request: Request, response: Response) => {
+router.put('/:id', async (request: Request, response: Response) => {
   const id = Number(request.params.id)
 
   if (!id) {
@@ -104,10 +126,10 @@ router.put('/:id', (request: Request, response: Response) => {
   }
 
   const { email, name, firstName, lastName, gender, phoneNumber, birthDate, address, avatarUrl, biography } =
-    request.body as UserUpdateInput
+    request.body as UserUpdateInputModel
 
   try {
-    UserService.updateUser(id, {
+    await UsersService.updateUser(id, {
       email,
       name,
       firstName,
@@ -140,7 +162,7 @@ router.delete('/:id', async (request: Request, response: BaseResponse) => {
   }
 
   try {
-    await UserService.deleteUser(id)
+    await UsersService.deleteUser(id)
     response.status(200).json({
       message: 'User deleted.'
     })

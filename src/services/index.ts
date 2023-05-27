@@ -1,2 +1,2 @@
-export * from './user.model'
-export { default as UserService } from './user.service'
+export * from './settings'
+export * from './users'
