@@ -93,6 +93,7 @@ pnpm build
 ## 已知问题
 
 - [x] `chalk` v5.x 与 `ts-node` 不兼容，使用 `chalk` v4.x 代替。
+- [x] 使用 `bcrypt.js` 而不是 `bcrypt`，避免安装过多依赖。
 
 ## 许可证
 

@@ -93,6 +93,7 @@ pnpm build
 ## Known Issue
 
 - [x] `chalk` v5.x doesn't work with `ts-node` well, use `chalk` v4.x instead.
+- [x] Use `bcrypt.js` instead of `bcrypt` to avoid dependencies installing.
 
 ## License
 
