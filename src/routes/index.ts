@@ -1,7 +1,7 @@
-import homeRouter from './home'
-import loginRouter from './login'
-import settingsRouter from './settings'
-import userRouter from './users'
+import homeRouter from './home.controller'
+import loginRouter from './login.controller'
+import settingsRouter from './settings.controller'
+import userRouter from './users.controller'
 
 const routes = [
   {

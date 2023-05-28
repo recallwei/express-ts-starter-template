@@ -1,2 +1,2 @@
-export * from './models'
-export * as UsersService from './services'
+export * from './users.models'
+export * as UsersService from './users.services'

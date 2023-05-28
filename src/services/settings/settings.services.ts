@@ -3,7 +3,7 @@ import { Prisma } from '@prisma/client'
 import { generateUUID, PrismaAction, PrismaQuery } from '@/shared'
 import type { PageRequestModel } from '@/types'
 
-import type { SettingsInputModel } from './models'
+import type { SettingsInputModel } from './settings.models'
 
 export const getSettings = async (pageModel: PageRequestModel) => {
   const { pageNum, pageSize } = pageModel

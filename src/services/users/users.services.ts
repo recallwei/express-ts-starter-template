@@ -5,7 +5,7 @@ import bcrypt from 'bcrypt'
 import { generateUUID, PrismaAction, PrismaQuery } from '@/shared'
 import type { PageRequestModel } from '@/types'
 
-import type { UserExistModel, UserSafeModel, UserSignupModel, UsersModel, UserUpdateModel } from './models'
+import type { UserExistModel, UserSafeModel, UserSignupModel, UsersModel, UserUpdateModel } from './users.models'
 
 export const getUsers = async (pageModel: PageRequestModel): Promise<UsersModel> => {
   const { pageNum, pageSize } = pageModel
