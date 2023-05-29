@@ -21,9 +21,6 @@ App.use(morgan('tiny'))
 App.use(bodyParser.json())
 App.use(bodyParser.urlencoded({ extended: true }))
 
-// Static files setup
-App.use('/static', express.static(path.join(__dirname, '@/static')))
-
 // Create file storage folder if not exists
 const storageFolder = GlobalFileStorageConfig.FILE_STORAGE_PATH
 try {
@@ -32,6 +29,10 @@ try {
   fs.mkdirSync(storageFolder, { recursive: true })
   console.log(chalk.green('[File Storage] File storage folder created.'))
 }
+
+// Static files setup
+App.use('/static', express.static(path.join(__dirname, './static')))
+App.use(`/${storageFolder}`, express.static(path.join(__dirname, `../${storageFolder}`)))
 
 // Init routes
 routes.forEach((route) => {
