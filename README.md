@@ -10,6 +10,7 @@ EST (Express Starter Template) is an opinionated `Express/TypeScript/Prisma/Post
 - [x] [TypeScript](https://www.typescriptlang.org/), of course
 - [x] [Prisma](https://www.prisma.io/) for ORM
 - [x] JWT authentication and role based authorization by custom middleware
+- [x] File service with `multer`
 - [ ] Fully configured logger with [Winston] and [Morgan]
 - [ ] Unit, Integration and E2E tests with [Jest] and [Supertest]
 - [x] Linting with `ESLint`

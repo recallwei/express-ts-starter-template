@@ -10,6 +10,7 @@ EST (Express Starter Template) 是一个基于 `Express/TypeScript/Prisma/Postgr
 - [x] [TypeScript](https://www.typescriptlang.org/)，当然
 - [x] [Prisma](https://www.prisma.io/) 作为 ORM
 - [x] JWT 认证和基于角色的授权
+- [x] 使用 `multer` 构建文件服务
 - [ ] 配置完善的日志系统，使用 [Winston] 和 [Morgan]
 - [ ] 使用 [Jest] 和 [Supertest] 进行单元测试、集成测试和 E2E 测试
 - [x] 使用 `ESLint` 进行代码检查
