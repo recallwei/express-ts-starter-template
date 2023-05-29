@@ -15,7 +15,6 @@ pnpm-debug.log*
 
 # Misc
 .DS_Store
-dist
 coverage
 *.local
 
@@ -31,4 +30,5 @@ coverage
 *.sw?
 *.zip
 
-temp
+/storage
+/temp

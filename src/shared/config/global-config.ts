@@ -31,3 +31,7 @@ export const GlobalDBConfig = Object.freeze({
   DB_NAME: getEnvStr('DB_NAME', 'est-db'),
   DB_URL: getEnvStr('DB_URL', 'postgresql://mars-user:mars-password@localhost:5432/est-db')
 })
+
+export const GlobalFileStorageConfig = Object.freeze({
+  FILE_STORAGE_PATH: getEnvStr('FILE_STORAGE_PATH', 'storage')
+})
