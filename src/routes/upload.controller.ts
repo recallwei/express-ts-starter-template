@@ -1,6 +1,5 @@
-import type { Request, Response, Router } from 'express'
+import type { Request, Router } from 'express'
 import express from 'express'
-import { readFileSync } from 'fs'
 
 import { UploadService } from '@/services/upload'
 import { baseUpload } from '@/shared'
@@ -8,14 +7,7 @@ import type { BaseResponse } from '@/types'
 
 const router: Router = express.Router()
 
-router.get('/', (request: Request, response: Response) => {
-  const file = readFileSync('storage/images/a278294ea9942307a598d89ba88f572a', { encoding: 'utf8' })
-  console.log(file)
-  response.set('content-type', 'image/png')
-  response.status(200).send(file)
-})
-
-router.post('/', baseUpload.single('file'), async (request: Request, response: BaseResponse<any>) => {
+router.post('/', baseUpload.single('file'), async (request: Request, response: BaseResponse<Express.Multer.File>) => {
   const { file } = request
   if (!file) {
     response.status(400).json({
