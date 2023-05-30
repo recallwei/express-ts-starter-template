@@ -36,6 +36,8 @@ router.post(
       return
     }
 
+    files.map((file) => UploadService.logFileInfo(file))
+
     response.json({
       data: files
     })

@@ -1,4 +1,5 @@
 import figlet from 'figlet'
+import gradient from 'gradient-string'
 import http from 'http'
 
 import { batchPrimaryLog, getCurrentTime, GlobalAppConfig, GlobalConfig } from '@/shared'
@@ -12,19 +13,24 @@ App.set('port', PORT)
 const Server = http.createServer(App)
 
 const showAppInitLog = (port: string) => {
-  figlet('Hello World!!', (err, data) => {
+  figlet(GlobalAppConfig.APP_NAME, (err, data) => {
     if (err) {
       console.log('Something went wrong...')
       console.dir(err)
       return
     }
-    console.log(data)
-  })
 
-  batchPrimaryLog([
-    `[${GlobalAppConfig.APP_NAME} - ${getCurrentTime('HH:mm:ss')}] Server is running on port ${port}`,
-    `[${GlobalAppConfig.APP_NAME} - ${getCurrentTime('HH:mm:ss')}] v${GlobalAppConfig.APP_VERSION}`
-  ])
+    batchPrimaryLog([
+      '',
+      gradient.rainbow(data),
+      '',
+      `[${GlobalAppConfig.APP_NAME} - ${getCurrentTime('HH:mm:ss')}] ${GlobalAppConfig.APP_NAME} v${
+        GlobalAppConfig.APP_VERSION
+      }`,
+      `[${GlobalAppConfig.APP_NAME} - ${getCurrentTime('HH:mm:ss')}] Author: ${GlobalAppConfig.APP_AUTHOR.name}`,
+      `[${GlobalAppConfig.APP_NAME} - ${getCurrentTime('HH:mm:ss')}] Server is running on port ${port}`
+    ])
+  })
 }
 
 Server.listen(PORT, () => {
