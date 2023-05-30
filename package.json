@@ -5,10 +5,10 @@
   "description": "EST (Express Starter Template) is an opinionated Express/TypeScript/Prisma/PostgreSQL starter template.",
   "author": "Bruce Song <recall4056@gmail.com> (https://github.com/recallwei/)",
   "keywords": [
-    "Node.js",
-    "Express",
-    "TypeScript",
-    "Prisma"
+    "node.js",
+    "express",
+    "typescript",
+    "prisma"
   ],
   "homepage": "https://github.com/recallwei/est#readme",
   "repository": "github:recallwei/est",
