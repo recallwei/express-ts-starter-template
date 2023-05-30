@@ -2,7 +2,7 @@ import multer from 'multer'
 
 import { GlobalFileStorageConfig } from './config'
 
-const storage = multer.diskStorage({
+const baseStorage = multer.diskStorage({
   destination(req, file, cb) {
     cb(null, GlobalFileStorageConfig.FILE_STORAGE_PATH)
   },
@@ -11,6 +11,6 @@ const storage = multer.diskStorage({
   }
 })
 
-const upload = multer({ storage })
+const baseUpload = multer({ storage: baseStorage })
 
-export { upload }
+export { baseUpload }

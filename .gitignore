@@ -30,5 +30,6 @@ coverage
 *.sw?
 *.zip
 
+# Storage dir is where the upload files are stored.
 /storage
 /temp

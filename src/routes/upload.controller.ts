@@ -3,7 +3,7 @@ import express from 'express'
 import { readFileSync } from 'fs'
 
 import { UploadService } from '@/services/upload'
-import { upload } from '@/shared'
+import { baseUpload } from '@/shared'
 import type { BaseResponse } from '@/types'
 
 const router: Router = express.Router()
@@ -15,7 +15,7 @@ router.get('/', (request: Request, response: Response) => {
   response.status(200).send(file)
 })
 
-router.post('/', upload.single('file'), async (request: Request, response: BaseResponse<any>) => {
+router.post('/', baseUpload.single('file'), async (request: Request, response: BaseResponse<any>) => {
   const { file } = request
   if (!file) {
     response.status(400).json({
@@ -31,7 +31,7 @@ router.post('/', upload.single('file'), async (request: Request, response: BaseR
   })
 })
 
-router.post('/batch', upload.array('files'), async (request: Request, response: BaseResponse<string>) => {
+router.post('/batch', baseUpload.array('files'), async (request: Request, response: BaseResponse<string>) => {
   const { files } = request
 
   console.log(files)

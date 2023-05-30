@@ -1,9 +1,8 @@
 import { randAvatar, randFullAddress, randPastDate, randPhoneNumber } from '@ngneat/falso'
 import type { Prisma } from '@prisma/client'
 import { Gender, PrismaClient, Role } from '@prisma/client'
-import chalk from 'chalk'
 
-import { generateUUID } from '@/shared'
+import { batchPrimaryLog, errorLog, generateUUID, getCurrentTime } from '@/shared'
 
 const prisma = new PrismaClient()
 
@@ -35,9 +34,13 @@ const seed = async () => {
 
 seed()
   .then(async () => {
-    console.log(chalk.green.bgWhiteBright('🍀 Seed your db successfully!'))
+    batchPrimaryLog([
+      `[prisma - ${getCurrentTime('HH:mm:ss')}] 🍀 Seed your db successfully!`,
+      `[prisma - ${getCurrentTime('HH:mm:ss')}] 🔒 Created the default user: ${defaultUser.username}`
+    ])
   })
   .catch(async (e) => {
+    errorLog(`[prisma - ${getCurrentTime('HH:mm:ss')}] 🐞 Error occurred when seed your db!`)
     console.error(e)
     await prisma.$disconnect()
     process.exit(1)
