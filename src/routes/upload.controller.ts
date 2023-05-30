@@ -23,13 +23,23 @@ router.post('/', baseUpload.single('file'), async (request: Request, response: B
   })
 })
 
-router.post('/batch', baseUpload.array('files'), async (request: Request, response: BaseResponse<string>) => {
-  const { files } = request
+router.post(
+  '/batch',
+  baseUpload.array('files'),
+  async (request: Request, response: BaseResponse<Express.Multer.File[]>) => {
+    const { files } = request
 
-  console.log(files)
-  response.json({
-    data: ''
-  })
-})
+    if (!files || !Array.isArray(files) || files.length === 0) {
+      response.status(400).json({
+        message: 'Files are required.'
+      })
+      return
+    }
+
+    response.json({
+      data: files
+    })
+  }
+)
 
 export default router

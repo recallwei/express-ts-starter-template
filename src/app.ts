@@ -1,34 +1,25 @@
 import bodyParser from 'body-parser'
-import chalk from 'chalk'
 import type { Express, NextFunction, Request, Response } from 'express'
 import express from 'express'
-import fs from 'fs'
 import createError from 'http-errors'
-import logger from 'morgan'
-import morgan from 'morgan'
 import path from 'path'
 
+import { fileStorageRegister } from '@/base'
+import { morganLogger } from '@/middlewares'
 import routes from '@/routes'
-
-import { GlobalFileStorageConfig } from './shared'
+import { GlobalFileStorageConfig } from '@/shared'
 
 const App: Express = express()
 
-App.use(logger('dev'))
 App.use(express.json())
 App.use(express.urlencoded({ extended: true }))
-App.use(morgan('tiny'))
+App.use(morganLogger)
 App.use(bodyParser.json())
 App.use(bodyParser.urlencoded({ extended: true }))
 
-// Create file storage folder if not exists
 const storageFolder = GlobalFileStorageConfig.FILE_STORAGE_PATH
-try {
-  fs.accessSync(storageFolder)
-} catch (e) {
-  fs.mkdirSync(storageFolder, { recursive: true })
-  console.log(chalk.green('[File Storage] File storage folder created.'))
-}
+
+fileStorageRegister(storageFolder)
 
 // Static files setup
 App.use('/static', express.static(path.join(__dirname, './static')))
