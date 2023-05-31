@@ -52,7 +52,7 @@ pnpm i
 - [ ] 在 `LICENSE` 中改变作者名
 - [ ] 在 `package.json` 中改变配置
 - [ ] 在 `.env` 中修改环境变量
-- [ ] 整理 `README.md]` 并删除冗余的 `Controller`
+- [ ] 整理 `README.md` 并删除冗余的 `Controller`
 
 ## 使用
 

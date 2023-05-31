@@ -31,7 +31,7 @@ module.exports = {
         'plugin:@typescript-eslint/recommended',
         'plugin:node/recommended',
         'airbnb-base',
-        'airbnb-typescript',
+        'airbnb-typescript/base',
         'plugin:import/recommended',
         'plugin:import/typescript',
         'plugin:import/errors',
@@ -65,8 +65,7 @@ module.exports = {
         'unused-imports/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
         'node/no-unsupported-features/es-syntax': ['error', { ignores: ['modules'] }],
         'node/no-missing-import': 'off',
-        'import/prefer-default-export': 'off',
-        'react/jsx-filename-extension': 'off' // Temporary fix
+        'import/prefer-default-export': 'off'
       }
     }
   ]

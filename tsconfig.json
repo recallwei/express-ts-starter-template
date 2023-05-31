@@ -15,12 +15,10 @@
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "noImplicitAny": true,
-    "skipLibCheck": true,
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
+    "skipLibCheck": true
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist", ".eslintrc.js"],
+  "exclude": ["dist", "node_modules", ".eslintrc.js"],
   "ts-node": {
     "require": ["tsconfig-paths/register"]
   }
