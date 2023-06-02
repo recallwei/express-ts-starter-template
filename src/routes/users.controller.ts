@@ -1,16 +1,16 @@
 import type { User } from '@prisma/client'
-import type { Request, Response, Router } from 'express'
+import type { Response, Router } from 'express'
 import express from 'express'
 
 import type { JWTUserModel } from '@/core'
 import { JWTManager } from '@/core'
 import type { UserSafeModel, UserSignupInputModel, UserSignupResponse, UserUpdateInputModel } from '@/services'
 import { UsersService } from '@/services'
-import type { BasePageResponse, BaseResponse, PageRequestModel } from '@/types'
+import type { BasePageResponse, BaseRequest, BaseResponse, PageRequestModel } from '@/types'
 
 const router: Router = express.Router()
 
-router.get('/', async (request: Request, response: BasePageResponse<UserSafeModel[]>) => {
+router.get('/', async (request: BaseRequest, response: BasePageResponse<UserSafeModel[]>) => {
   const { pageNum, pageSize } = request.query
 
   if (!pageNum || !pageSize) {
@@ -40,7 +40,7 @@ router.get('/', async (request: Request, response: BasePageResponse<UserSafeMode
   })
 })
 
-router.get('/:id', async (request: Request, response: BaseResponse<User>) => {
+router.get('/:id', async (request: BaseRequest, response: BaseResponse<User>) => {
   const id = Number(request.params.id)
   const user = await UsersService.getUserById(id)
   if (user) {
@@ -54,7 +54,7 @@ router.get('/:id', async (request: Request, response: BaseResponse<User>) => {
   }
 })
 
-router.post('/', async (request: Request, response: UserSignupResponse) => {
+router.post('/', async (request: BaseRequest, response: UserSignupResponse) => {
   const { username, password, confirmPassword } = request.body as UserSignupInputModel
 
   // Required fields
@@ -82,10 +82,13 @@ router.post('/', async (request: Request, response: UserSignupResponse) => {
   }
 
   try {
-    const user = await UsersService.createUser({
-      username,
-      password: await UsersService.passwordHash(password)
-    })
+    const user = await UsersService.createUser(
+      {
+        username,
+        password: await UsersService.passwordHash(password)
+      },
+      { request }
+    )
 
     // Generate JWT token
     const jwtUserModel: JWTUserModel = {
@@ -115,7 +118,7 @@ router.post('/', async (request: Request, response: UserSignupResponse) => {
   }
 })
 
-router.put('/:id', async (request: Request, response: Response) => {
+router.put('/:id', async (request: BaseRequest, response: Response) => {
   const id = Number(request.params.id)
 
   if (!id) {
@@ -129,18 +132,22 @@ router.put('/:id', async (request: Request, response: Response) => {
     request.body as UserUpdateInputModel
 
   try {
-    await UsersService.updateUser(id, {
-      email,
-      name,
-      firstName,
-      lastName,
-      gender,
-      phoneNumber,
-      birthDate,
-      address,
-      avatarUrl,
-      biography
-    })
+    await UsersService.updateUser(
+      id,
+      {
+        email,
+        name,
+        firstName,
+        lastName,
+        gender,
+        phoneNumber,
+        birthDate,
+        address,
+        avatarUrl,
+        biography
+      },
+      { request }
+    )
     response.status(200).json({
       message: 'User updated.'
     })
@@ -152,7 +159,7 @@ router.put('/:id', async (request: Request, response: Response) => {
   }
 })
 
-router.delete('/:id', async (request: Request, response: BaseResponse) => {
+router.delete('/:id', async (request: BaseRequest, response: BaseResponse) => {
   const id = Number(request.params.id)
   if (!id) {
     response.status(400).json({
@@ -162,7 +169,7 @@ router.delete('/:id', async (request: Request, response: BaseResponse) => {
   }
 
   try {
-    await UsersService.deleteUser(id)
+    await UsersService.deleteUser(id, { request })
     response.status(200).json({
       message: 'User deleted.'
     })

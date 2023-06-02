@@ -3,7 +3,7 @@ import type { User } from '@prisma/client'
 import { Role } from '@prisma/client'
 
 import { generateUUID, PrismaAction, PrismaQuery } from '@/shared'
-import type { PageRequestModel } from '@/types'
+import type { PageRequestModel, ServiceOptions } from '@/types'
 
 import type { UserExistModel, UserSafeModel, UserSignupModel, UsersModel, UserUpdateModel } from './users.models'
 
@@ -45,39 +45,49 @@ export const getUserById = async (id: number): Promise<User | null> =>
     }
   })
 
-export const createUser = async (user: UserSignupModel): Promise<User> =>
-  PrismaQuery.user.create({
+export const createUser = async (user: UserSignupModel, options?: ServiceOptions): Promise<User> => {
+  const { request } = options || {}
+  const currentUsername = request?.currentUser?.username
+  return PrismaQuery.user.create({
     data: {
       ...user,
       uuid: generateUUID(),
       verified: true,
       enabled: true,
-      roles: [Role.USER]
+      roles: [Role.USER],
+      createdBy: currentUsername
     }
   })
+}
 
-// TODO: Add updateBy
-export const updateUser = async (id: number, user: UserUpdateModel): Promise<User | null> =>
-  PrismaQuery.user.update({
+export const updateUser = async (id: number, user: UserUpdateModel, options?: ServiceOptions): Promise<User | null> => {
+  const { request } = options || {}
+  const currentUsername = request?.currentUser?.username
+  return PrismaQuery.user.update({
     where: {
       id
     },
     data: {
       ...user,
-      updatedAt: new Date().toISOString()
+      updatedBy: currentUsername
     }
   })
+}
 
-// TODO: Add deletedBy
-export const deleteUser = async (id: number): Promise<User | null> =>
-  PrismaQuery.user.update({
+export const deleteUser = async (id: number, options?: ServiceOptions): Promise<User | null> => {
+  const { request } = options || {}
+  const currentUsername = request?.currentUser?.username
+  return PrismaQuery.user.update({
     where: {
       id
     },
     data: {
-      deletedAt: new Date().toISOString()
+      updatedBy: currentUsername,
+      deletedAt: new Date().toISOString(),
+      deletedBy: currentUsername
     }
   })
+}
 
 export const alreadyExists = async (username: string): Promise<UserExistModel> => {
   const user = await PrismaQuery.user.findFirst({
@@ -101,42 +111,58 @@ export const passwordHash = async (password: string) => hash(password, 10)
 
 export const passwordEquals = async (password: string, hashedPassword: string) => compare(password, hashedPassword)
 
-export const verifyUser = async (id: number): Promise<User | null> =>
-  PrismaQuery.user.update({
+export const verifyUser = async (id: number, options?: ServiceOptions): Promise<User | null> => {
+  const { request } = options || {}
+  const currentUsername = request?.currentUser?.username
+  return PrismaQuery.user.update({
     where: {
       id
     },
     data: {
-      verified: true
+      verified: true,
+      updatedBy: currentUsername
     }
   })
+}
 
-export const banUser = async (id: number): Promise<User | null> =>
-  PrismaQuery.user.update({
+export const banUser = async (id: number, options?: ServiceOptions): Promise<User | null> => {
+  const { request } = options || {}
+  const currentUsername = request?.currentUser?.username
+  return PrismaQuery.user.update({
     where: {
       id
     },
     data: {
-      enabled: false
+      enabled: false,
+      updatedBy: currentUsername
     }
   })
+}
 
-export const enableUser = async (id: number): Promise<User | null> =>
-  PrismaQuery.user.update({
+export const enableUser = async (id: number, options?: ServiceOptions): Promise<User | null> => {
+  const { request } = options || {}
+  const currentUsername = request?.currentUser?.username
+  return PrismaQuery.user.update({
     where: {
       id
     },
     data: {
-      enabled: true
+      enabled: true,
+      updatedBy: currentUsername
     }
   })
+}
 
-export const authorizeUse = async (id: number): Promise<User | null> =>
-  PrismaQuery.user.update({
+export const authorizeUse = async (id: number, options?: ServiceOptions): Promise<User | null> => {
+  const { request } = options || {}
+  const currentUsername = request?.currentUser?.username
+  return PrismaQuery.user.update({
     where: {
       id
     },
     data: {
-      roles: [Role.USER, Role.ADMIN]
+      roles: [Role.USER, Role.ADMIN],
+      updatedBy: currentUsername
     }
   })
+}

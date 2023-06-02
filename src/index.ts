@@ -4,13 +4,13 @@ import http from 'http'
 
 import { batchPrimaryLog, getCurrentTime, GlobalAppConfig, GlobalConfig } from '@/shared'
 
-import App from './app'
+import app from './app'
 
 const { PORT } = GlobalConfig
 
-App.set('port', PORT)
+app.set('port', PORT)
 
-const Server = http.createServer(App)
+const Server = http.createServer(app)
 
 const showAppInitLog = (port: string) => {
   figlet(GlobalAppConfig.APP_NAME, (err, data) => {

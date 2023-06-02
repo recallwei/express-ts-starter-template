@@ -1,7 +1,7 @@
 import { Prisma } from '@prisma/client'
 
 import { generateUUID, PrismaAction, PrismaQuery } from '@/shared'
-import type { PageRequestModel } from '@/types'
+import type { PageRequestModel, ServiceOptions } from '@/types'
 
 import type { SettingsInputModel } from './settings.models'
 
@@ -47,29 +47,38 @@ export const getSettingsByKeys = async (keys: string[]) =>
     }
   })
 
-export const createSetting = async (setting: SettingsInputModel) =>
-  PrismaQuery.setting.create({
+export const createSetting = async (setting: SettingsInputModel, options?: ServiceOptions) => {
+  const { request } = options || {}
+  const currentUsername = request?.currentUser?.username
+  return PrismaQuery.setting.create({
     data: {
       ...setting,
       uuid: generateUUID(),
       enabled: true,
-      value: setting.value ?? Prisma.DbNull
+      value: setting.value ?? Prisma.DbNull,
+      createdBy: currentUsername
     }
   })
+}
 
-export const createSettings = async (settings: SettingsInputModel[]) =>
-  PrismaQuery.setting.createMany({
+export const createSettings = async (settings: SettingsInputModel[], options?: ServiceOptions) => {
+  const { request } = options || {}
+  const currentUsername = request?.currentUser?.username
+  return PrismaQuery.setting.createMany({
     data: settings.map((setting) => ({
       ...setting,
       uuid: generateUUID(),
       enabled: true,
-      value: setting.value ?? Prisma.DbNull
+      value: setting.value ?? Prisma.DbNull,
+      createdBy: currentUsername
     }))
   })
+}
 
-// TODO: Add updateBy
-export const updateSettingByKey = async (setting: SettingsInputModel) => {
+export const updateSettingByKey = async (setting: SettingsInputModel, options?: ServiceOptions) => {
   const { key, value, description } = setting
+  const { request } = options || {}
+  const currentUsername = request?.currentUser?.username
   return PrismaQuery.setting.update({
     where: {
       key
@@ -77,40 +86,50 @@ export const updateSettingByKey = async (setting: SettingsInputModel) => {
     data: {
       value: value ?? Prisma.DbNull,
       description,
-      updatedAt: new Date().toISOString()
+      updatedBy: currentUsername
     }
   })
 }
 
-// TODO: Add deletedBy
-export const deleteSettingByKey = async (key: string) =>
-  PrismaQuery.setting.update({
+export const deleteSettingByKey = async (key: string, options?: ServiceOptions) => {
+  const { request } = options || {}
+  const currentUsername = request?.currentUser?.username
+  return PrismaQuery.setting.update({
     where: {
       key
     },
     data: {
-      deletedAt: new Date().toISOString()
+      updatedBy: currentUsername,
+      deletedAt: new Date().toISOString(),
+      deletedBy: currentUsername
     }
   })
+}
 
-export const banSettingByKey = async (key: string) =>
-  PrismaQuery.setting.update({
+export const banSettingByKey = async (key: string, options?: ServiceOptions) => {
+  const { request } = options || {}
+  const currentUsername = request?.currentUser?.username
+  return PrismaQuery.setting.update({
     where: {
       key
     },
     data: {
       enabled: false,
-      updatedAt: new Date().toISOString()
+      updatedBy: currentUsername
     }
   })
+}
 
-export const enableSettingByKey = async (key: string) =>
-  PrismaQuery.setting.update({
+export const enableSettingByKey = async (key: string, options?: ServiceOptions) => {
+  const { request } = options || {}
+  const currentUsername = request?.currentUser?.username
+  return PrismaQuery.setting.update({
     where: {
       key
     },
     data: {
       enabled: true,
-      updatedAt: new Date().toISOString()
+      updatedBy: currentUsername
     }
   })
+}

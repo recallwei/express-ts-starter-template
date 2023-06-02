@@ -4,35 +4,40 @@ import express from 'express'
 import path from 'path'
 
 import { fileStorageRegister } from '@/base'
-import { internalServerErrorHandler, morganLogger, notFoundHandler } from '@/middlewares'
+import { internalServerErrorHandler, morganLogger, notFoundHandler, validateToken } from '@/middlewares'
 import routes from '@/routes'
 import { GlobalFileStorageConfig } from '@/shared'
 
-const App: Express = express()
+const app: Express = express()
 
-App.use(morganLogger)
-App.use(express.json())
-App.use(express.urlencoded({ extended: true }))
-App.use(bodyParser.json())
-App.use(bodyParser.urlencoded({ extended: true }))
+app.use(morganLogger)
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
 
 const storageFolder = GlobalFileStorageConfig.FILE_STORAGE_PATH
 
 fileStorageRegister(storageFolder)
 
 // Static files setup
-App.use('/static', express.static(path.join(__dirname, './static')))
-App.use(`/${storageFolder}`, express.static(path.join(__dirname, `../${storageFolder}`)))
+app.use('/static', express.static(path.join(__dirname, './static')))
+app.use(`/${storageFolder}`, express.static(path.join(__dirname, `../${storageFolder}`)))
 
 // Init routes
 routes.forEach((route) => {
-  App.use(route.path, route.router)
+  // Auth routes
+  if (route.auth) {
+    app.use(route.path, validateToken, route.router)
+  } else {
+    app.use(route.path, route.router)
+  }
 })
 
 // 404 handler
-App.use(notFoundHandler)
+app.use(notFoundHandler)
 
 // Error handler
-App.use(internalServerErrorHandler)
+app.use(internalServerErrorHandler)
 
-export default App
+export default app

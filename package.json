@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "est",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "EST (Express Starter Template) is an opinionated Express/TypeScript/Prisma/PostgreSQL starter template.",
   "author": "Bruce Song <recall4056@gmail.com> (https://github.com/recallwei/)",
   "keywords": [

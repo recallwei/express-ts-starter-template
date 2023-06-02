@@ -1,13 +1,13 @@
 import type { Setting } from '@prisma/client'
-import type { Request, Router } from 'express'
+import type { Router } from 'express'
 import express from 'express'
 
 import { SettingsService } from '@/services'
-import type { BasePageResponse, BaseResponse, PageRequestModel } from '@/types'
+import type { BasePageResponse, BaseRequest, BaseResponse, PageRequestModel } from '@/types'
 
 const router: Router = express.Router()
 
-router.get('/', async (request: Request, response: BasePageResponse<Setting[]>) => {
+router.get('/', async (request: BaseRequest, response: BasePageResponse<Setting[]>) => {
   const { pageNum, pageSize } = request.query
 
   if (!pageNum || !pageSize) {
@@ -37,7 +37,7 @@ router.get('/', async (request: Request, response: BasePageResponse<Setting[]>) 
   })
 })
 
-router.get('/batch', async (request: Request, response: BaseResponse<Setting[]>) => {
+router.get('/batch', async (request: BaseRequest, response: BaseResponse<Setting[]>) => {
   const { keys } = request.body
 
   if (!keys || !Array.isArray(keys)) {
@@ -53,7 +53,7 @@ router.get('/batch', async (request: Request, response: BaseResponse<Setting[]>)
   })
 })
 
-router.get('/:key', async (request: Request, response: BaseResponse<Setting>) => {
+router.get('/:key', async (request: BaseRequest, response: BaseResponse<Setting>) => {
   const { key } = request.params
   const setting = await SettingsService.getSettingByKey(key)
   if (setting) {
@@ -67,7 +67,7 @@ router.get('/:key', async (request: Request, response: BaseResponse<Setting>) =>
   }
 })
 
-router.post('/', async (request: Request, response: BaseResponse) => {
+router.post('/', async (request: BaseRequest, response: BaseResponse) => {
   const { key, value, description } = request.body as Setting
 
   if (!key) {
@@ -84,18 +84,21 @@ router.post('/', async (request: Request, response: BaseResponse) => {
     return
   }
 
-  await SettingsService.createSetting({
-    key,
-    value,
-    description
-  })
+  await SettingsService.createSetting(
+    {
+      key,
+      value,
+      description
+    },
+    { request }
+  )
 
   response.status(201).json({
     message: 'Setting created.'
   })
 })
 
-router.post('/batch', async (request: Request, response: BaseResponse) => {
+router.post('/batch', async (request: BaseRequest, response: BaseResponse) => {
   const { settings } = request.body
 
   if (!settings || !Array.isArray(settings)) {
@@ -122,14 +125,14 @@ router.post('/batch', async (request: Request, response: BaseResponse) => {
     return
   }
 
-  await SettingsService.createSettings(settings)
+  await SettingsService.createSettings(settings, { request })
 
   response.status(201).json({
     message: 'Settings created.'
   })
 })
 
-router.put('/:key', async (request: Request, response: BaseResponse) => {
+router.put('/:key', async (request: BaseRequest, response: BaseResponse) => {
   const { key } = request.params
   const { value, description } = request.body as Setting
 
@@ -148,11 +151,14 @@ router.put('/:key', async (request: Request, response: BaseResponse) => {
   }
 
   try {
-    await SettingsService.updateSettingByKey({
-      key,
-      value,
-      description
-    })
+    await SettingsService.updateSettingByKey(
+      {
+        key,
+        value,
+        description
+      },
+      { request }
+    )
 
     response.status(200).json({
       message: 'Setting updated.'
@@ -165,7 +171,7 @@ router.put('/:key', async (request: Request, response: BaseResponse) => {
   }
 })
 
-router.delete('/:key', async (request: Request, response: BaseResponse) => {
+router.delete('/:key', async (request: BaseRequest, response: BaseResponse) => {
   const { key } = request.params
 
   if (!key) {
@@ -183,7 +189,7 @@ router.delete('/:key', async (request: Request, response: BaseResponse) => {
   }
 
   try {
-    await SettingsService.deleteSettingByKey(key)
+    await SettingsService.deleteSettingByKey(key, { request })
     response.status(200).json({
       message: 'Setting deleted.'
     })

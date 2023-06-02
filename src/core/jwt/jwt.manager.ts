@@ -11,31 +11,30 @@ export default {
       throw new Error('Invalid user data, generate token failed!')
     }
     const accessToken = sign({ id, username, roles }, GlobalJWTConfig.JWT_SECRET, {
-      expiresIn: GlobalJWTConfig.JWT_EXPIRATION
+      expiresIn: `${GlobalJWTConfig.JWT_EXPIRATION}d`
     })
 
     return accessToken
   },
 
-  validateAccessToken: (request: Request): JWTUserModel | undefined => {
-    const bearerToken = request.headers.get('authorization')
-    if (!bearerToken) {
+  validateAccessToken: (authorization: string): JWTUserModel | undefined => {
+    if (!authorization) {
       return undefined
     }
-    const accessToken = bearerToken.split(' ')[1]
+    const accessToken = authorization.replace('Bearer', '').trim()
     if (!accessToken) {
       return undefined
     }
-    let verifyResult: JWTUserModel | undefined
+    let verifiedResult: JWTUserModel | undefined
     verify(accessToken, GlobalJWTConfig.JWT_SECRET, (error, decoded) => {
       if (error !== null) {
-        verifyResult = undefined
+        verifiedResult = undefined
       } else if (decoded) {
-        verifyResult = decoded as JWTUserModel
+        verifiedResult = decoded as JWTUserModel
       } else {
-        verifyResult = undefined
+        verifiedResult = undefined
       }
     })
-    return verifyResult
+    return verifiedResult
   }
 }

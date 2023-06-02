@@ -1,11 +1,11 @@
-import type { Request, Router } from 'express'
+import type { Router } from 'express'
 import express from 'express'
 
-import type { BaseResponse } from '@/types'
+import type { BaseRequest, BaseResponse } from '@/types'
 
 const router: Router = express.Router()
 
-router.get('/', (_: Request, response: BaseResponse<string>) => {
+router.get('/', (_: BaseRequest, response: BaseResponse<string>) => {
   response.status(200).json({
     data: 'Welcome to EST, this is a demo API!'
   })

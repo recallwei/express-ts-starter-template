@@ -8,7 +8,6 @@ import { UsersService } from '@/services'
 import type { BaseRequest } from '@/types'
 
 const router: Router = express.Router()
-
 router.get('/', async (request: BaseRequest, response: UserLoginResponse) => {
   const { username, password } = request.body as UserLoginInputModel
 
@@ -19,9 +18,9 @@ router.get('/', async (request: BaseRequest, response: UserLoginResponse) => {
     return
   }
 
-  if (username.trim().length < 4) {
+  if (username.trim().length < 6) {
     response.status(400).json({
-      message: 'Username must be at least 4 characters.'
+      message: 'Username must be at least 6 characters.'
     })
     return
   }

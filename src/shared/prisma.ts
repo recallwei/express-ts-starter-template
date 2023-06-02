@@ -15,6 +15,10 @@ export const PrismaQuery: PrismaClient =
 
 // Logging Middleware
 PrismaQuery.$use(async (params, next) => {
+  if (params.action === 'update' || params.action === 'updateMany') {
+    // eslint-disable-next-line no-param-reassign
+    params.args.data.updateAt = new Date().toISOString()
+  }
   const before = Date.now()
   const result = await next(params)
   const after = Date.now()
