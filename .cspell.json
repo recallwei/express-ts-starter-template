@@ -21,6 +21,7 @@
     "node_modules",
     "public",
     "pnpm-lock.yaml",
-    "README.md"
+    "README.md",
+    "/src/prisma/migrations"
   ]
 }
