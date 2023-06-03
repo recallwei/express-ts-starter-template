@@ -17,20 +17,21 @@
     "build": "pnpm clear && tsc --build",
     "start": "cross-env NODE_ENV=production npm run build && node ./dist/index.js",
     "clear": "tsc --build --clean",
-    "check:spelling": "cspell **",
-    "check:types": "tsc --pretty --noEmit",
-    "check:format": "prettier --check .",
-    "check:lint": "eslint . --ext .js,.ts --color",
-    "fix:format": "prettier --check --write --ignore-unknown .",
-    "fix:lint": "pnpm check:lint -- --fix",
+    "cspell:check": "cspell **",
+    "cspell:sort": "node ./scripts/cspell-sort.js",
+    "eslint:check": "eslint . --ext .js,.ts --color",
+    "eslint:fix": "pnpm check:lint -- --fix",
+    "prettier:check": "prettier --check .",
+    "prettier:fix": "prettier --check --write --ignore-unknown .",
+    "type:check": "tsc --pretty --noEmit",
+    "prepare": "husky install",
     "prisma:generate": "prisma generate",
     "prisma:generate:watch": "prisma generate --watch",
     "prisma:migrate": "prisma migrate dev --skip-seed",
     "prisma:seed": "prisma db seed",
     "prisma:reset": "prisma migrate reset",
     "prisma:studio": "prisma studio",
-    "prisma:format": "prisma format",
-    "prepare": "husky install"
+    "prisma:format": "prisma format"
   },
   "dependencies": {
     "@ngneat/falso": "^6.4.0",
@@ -52,6 +53,8 @@
     "uuid": "^9.0.0"
   },
   "devDependencies": {
+    "@commitlint/cli": "^17.6.5",
+    "@commitlint/config-conventional": "^17.6.5",
     "@types/body-parser": "^1.19.2",
     "@types/cors": "^2.8.13",
     "@types/express": "4.17.17",
