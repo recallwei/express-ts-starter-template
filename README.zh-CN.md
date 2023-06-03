@@ -6,19 +6,19 @@ EST (Express Starter Template) 是一个基于 `Express/TypeScript/Prisma/Postgr
 
 ## 特性
 
-- [x] [Express](https://expressjs.com/)，开箱即用
+- [x] 基于 [Express](https://expressjs.com/)
 - [x] [TypeScript](https://www.typescriptlang.org/)，当然
 - [x] [Prisma](https://www.prisma.io/) 作为 ORM
 - [x] JWT 认证和基于角色的授权
 - [x] 使用 `multer` 构建文件服务
 - [ ] 配置完善的日志系统，使用 [Winston] 和 [Morgan]
 - [ ] 使用 [Jest] 和 [Supertest] 进行单元测试、集成测试和 E2E 测试
-- [x] 使用 `ESLint` 进行代码检查
-- [x] 使用 `Prettier` 进行代码格式化
-- [x] 代码拼写检查
-- [ ] 使用 `Husky` 和 `lint-staged` 进行 Git 钩子管理
+- [x] 使用 `ESLint` 执行代码检查
+- [x] 使用 `Prettier` 执行代码格式化
+- [x] 使用 `cspell` 执行代码拼写检查
+- [x] 使用 `Husky`，`lint-staged` 和 `commitlint` 进行 Git 提交管理
 - [ ] 使用 `Docker` 和 `Docker Compose` 进行容器化
-- [x] 使用 `@/*` 作为路径别名
+- [x] 使用 `@/*` 作为绝对路径
 
 ## 技术栈
 
@@ -49,10 +49,16 @@ pnpm i
 
 使用此模板时，请尝试按照清单正确更新您自己的信息：
 
-- [ ] 在 `LICENSE` 中改变作者名
-- [ ] 在 `package.json` 中改变配置
-- [ ] 在 `.env` 中修改环境变量
-- [ ] 整理 `README.md` 并删除冗余的 `Controller`
+- [ ] 整理 `README.md`
+- [ ] 修改 `LICENSE` 中的作者名
+- [ ] 修改 `package.json` 中的项目名称、描述、作者等信息
+- [ ] 在 `.env` 中修改环境变量，删除示例环境变量 `.env.example`
+- [ ] 删除 `src/routes` 目录下的示例 Controller 和路由信息
+
+## 注意
+
+- 文件服务默认会保存在 `./storage` 目录下，该目录默认被添加至 `.gitignore` 中，该目录可通过 `.env` 中的 `FILE_STORAGE_PATH` 重新设置，
+  不要忘记将该配置目录添加到 `.gitignore`，以防将存储的文件上传到 GitHub。
 
 ## 使用
 

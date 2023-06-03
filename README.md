@@ -6,19 +6,19 @@ EST (Express Starter Template) is an opinionated `Express/TypeScript/Prisma/Post
 
 ## Feature
 
-- [x] [Express](https://expressjs.com/), out of box
+- [x] Based on [Express](https://expressjs.com/)
 - [x] [TypeScript](https://www.typescriptlang.org/), of course
 - [x] [Prisma](https://www.prisma.io/) for ORM
-- [x] JWT authentication and role based authorization by custom middleware
+- [x] JWT authentication and role based authorization
 - [x] File service with `multer`
 - [ ] Fully configured logger with [Winston] and [Morgan]
 - [ ] Unit, Integration and E2E tests with [Jest] and [Supertest]
 - [x] Linting with `ESLint`
 - [x] Formatting with `Prettier`
-- [x] Code spell check
-- [ ] Git hooks with `Husky` and `lint-staged`
+- [x] Spelling check with `cspell`
+- [x] Git commit management with `Husky`, `lint-staged` and `commitlint`
 - [ ] Containerised with `Docker` and `Docker Compose`
-- [x] Path aliases support by using `@/*`
+- [x] Absolute path with `@/*`
 
 ## Tech Stack
 
@@ -49,10 +49,17 @@ pnpm i
 
 When using this template, try to update your own information correctly according to the checklist:
 
+- [ ] Clean up `README.md`
 - [ ] Change author name in `LICENSE`
-- [ ] Change configuration in `package.json`
-- [ ] Change environment variables in `.env`
-- [ ] Clean up `README.md` and delete redundant `Controller`
+- [ ] Change project name, description, author, etc. in `package.json`
+- [ ] Modify environment variables in `.env` and delete the file `.env.example` which is an example of environment variables
+- [ ] Delete the example controller and route information in the `src/routes` directory
+
+## Notice
+
+- The file service will be saved in the `./storage` directory by default, which is added to `.gitignore` by default.
+  The directory can be reset by `FILE_STORAGE_PATH` in `.env`.
+  Don't forget to add the storage directory to `.gitignore` to prevent the stored files from being uploaded to GitHub.
 
 ## Usage
 
