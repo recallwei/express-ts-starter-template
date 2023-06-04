@@ -84,6 +84,7 @@ pnpm i
 ```bash
 pnpm prisma:migrate
 pnpm prisma:generate
+pnpm prisma:seed
 ```
 
 ### Start
