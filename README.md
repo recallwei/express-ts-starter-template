@@ -29,7 +29,7 @@ EST (Express Starter Template) is an opinionated `Express/TypeScript/Prisma/Post
 
 ## Getting Started
 
-## GitHub Template
+### GitHub Template
 
 > EST requires Node version >=14.16.0
 
