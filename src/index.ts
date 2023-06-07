@@ -14,6 +14,7 @@ const Server = http.createServer(app)
 
 const showAppInitLog = (port: string) => {
   figlet(GlobalAppConfig.APP_NAME, (err, data) => {
+    console.clear()
     if (err) {
       console.log('Something went wrong...')
       console.dir(err)
