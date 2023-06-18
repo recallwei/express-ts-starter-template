@@ -4,7 +4,7 @@ import express from 'express'
 
 import type { JWTUserModel } from '@/core'
 import { JWTManager } from '@/core'
-import type { UserSafeModel, UserSignupInputModel, UserSignupResponse, UserUpdateInputModel } from '@/services'
+import type { UserSafeModel, UserSignupInputModel, UserSignupResponse, UserUpdateInputBaseModel } from '@/services'
 import { UsersService } from '@/services'
 import type { BasePageResponse, BaseRequest, BaseResponse, PageRequestModel } from '@/types'
 
@@ -82,13 +82,10 @@ router.post('/', async (request: BaseRequest, response: UserSignupResponse) => {
   }
 
   try {
-    const user = await UsersService.createUser(
-      {
-        username,
-        password: await UsersService.passwordHash(password)
-      },
-      { request }
-    )
+    const user = await UsersService.createUser({
+      username,
+      password: await UsersService.passwordHash(password)
+    })
 
     // Generate JWT token
     const jwtUserModel: JWTUserModel = {
@@ -129,7 +126,7 @@ router.put('/:id', async (request: BaseRequest, response: Response) => {
   }
 
   const { email, name, firstName, lastName, gender, phoneNumber, birthDate, address, avatarUrl, biography } =
-    request.body as UserUpdateInputModel
+    request.body as UserUpdateInputBaseModel
 
   try {
     await UsersService.updateUser(
