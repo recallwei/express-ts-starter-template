@@ -21,7 +21,6 @@ const storageFolder = GlobalFileStorageConfig.FILE_STORAGE_PATH
 fileStorageRegister(storageFolder)
 
 // Static files setup
-app.use('/static', express.static(path.join(__dirname, './static')))
 app.use(`/${storageFolder}`, express.static(path.join(__dirname, `../${storageFolder}`)))
 
 // Init routes
