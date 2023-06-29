@@ -153,7 +153,7 @@ export const enableUser = async (id: number, options?: ServiceOptions): Promise<
   })
 }
 
-export const authorizeUse = async (id: number, options?: ServiceOptions): Promise<User | null> => {
+export const authorizeUser = async (id: number, options?: ServiceOptions): Promise<User | null> => {
   const { request } = options || {}
   const currentUsername = request?.currentUser?.username
   return PrismaQuery.user.update({
