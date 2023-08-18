@@ -4,7 +4,7 @@ English / [简体中文](./README.zh-CN.md)
 
 EST (Express Starter Template) is an opinionated `Express/TypeScript/Prisma/PostgreSQL` starter template.
 
-## Feature
+## Features
 
 - [x] Based on [Express](https://expressjs.com/)
 - [x] [TypeScript](https://www.typescriptlang.org/), of course
